@@ -10,19 +10,31 @@ describe("PRUEBAS DE COMPONENTES", () => {
    * 3 Existe un elemento de navegación hacia Inicio?
    */
   test("1 | render text", () => {
-    render(<App />);
+    render(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
     const linkElement = screen.getByText(/Podcaster/i);
     expect(linkElement).toBeInTheDocument();
   });
 
   test("2 | render search input", () => {
-    render(<App />);
+    render(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
     const testElm = screen.getByRole("textbox");
     expect(testElm).toBeInTheDocument();
   });
 
   test("3 | link to / exist", () => {
-    render(<App />);
+    render(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
     const testElm = screen.getByRole("link", { name: /Podcaster/i });
     expect(testElm).toBeInTheDocument();
     expect(testElm.getAttribute("href")).toBe("/");
@@ -34,7 +46,11 @@ describe("PRUEBAS DE FUNCIONALIDAD", () => {
    * 1 El input recive los datos introducidos correctamente?
    */
   test("1 | EL input reacciona correctamente", () => {
-    render(<App />);
+    render(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
     const linkElement = screen.getByText(/Podcaster/i);
     expect(linkElement).toBeInTheDocument();
   });

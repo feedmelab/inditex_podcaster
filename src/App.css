@@ -1,4 +1,39 @@
 .App {
-  text-align: center;
   color: var(--primary-color);
+}
+.header {
+  text-decoration: none;
+}
+.header .nav-area {
+  height: 2.53rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+}
+.nav-area a {
+  text-decoration: none;
+  font-size: 1.3rem;
+}
+
+.header .search-area {
+  height: 2.53rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.search-area label {
+  margin-right: var(--min-spacer);
+  border: 1px solid var(--border-color);
+  border-radius: var(--min-spacer);
+  background-color: var(--primary-color);
+  padding-inline: var(--min-spacer);
+  color: white;
+}
+.search-area input {
+  border: 1px solid var(--border-color);
+  border-radius: var(--min-spacer);
+  padding-inline: var(--min-spacer);
+  color: #191919;
+  outline: none;
 }

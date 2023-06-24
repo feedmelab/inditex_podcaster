@@ -14,4 +14,6 @@ code {
 
 :root {
   --primary-color: #2470b5 !important;
+  --border-color: #e6e6e4 !important;
+  --min-spacer: 0.3rem;
 }
