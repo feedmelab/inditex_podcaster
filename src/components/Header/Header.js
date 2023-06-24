@@ -12,7 +12,11 @@ const Header = () => {
           <a href='/' alt='Incio'>
             Podcaster
           </a>
-          {status === "loading" && <span data-testid='loader'>Loading</span>}
+          {status === "loading" && (
+            <span data-testid='loader'>
+              <i className='gg-spinner'></i>
+            </span>
+          )}
         </div>
         <div className='search-area form-group'>
           <label htmlFor=''>100</label>

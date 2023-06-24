@@ -58,7 +58,7 @@ describe("PRUEBAS DE FUNCIONALIDAD", () => {
 
 describe("PRUEBAS DE CARGA", () => {
   /**
-   * 1 Loader visible durante la llamada al fetch
+   * 1 Loader visible durante la llamada al fetch y no visible al finalizar
    */
 
   test("1 | Loader", async () => {
