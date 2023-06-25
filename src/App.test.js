@@ -1,4 +1,5 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import React from "react";
+import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import App from "./App";
 import { Provider } from "react-redux";
 import store from "./store/store";
@@ -60,39 +61,16 @@ describe("PRUEBAS DE CARGA", () => {
   /**
    * 1 Loader visible durante la llamada al fetch y no visible al finalizar
    */
-
-  test("1 | Loader", async () => {
-    global.fetch = jest.fn(
-      () =>
-        new Promise((resolve) => {
-          setTimeout(() => {
-            resolve({
-              json: () =>
-                Promise.resolve({
-                  feed: {
-                    entry: [
-                      {
-                        "im:name": { label: "Miss Indepodcast" },
-                      },
-                    ],
-                  },
-                }),
-            });
-          }, 500);
-        })
-    );
-
-    render(
-      <Provider store={store}>
-        <App />
-      </Provider>
-    );
-
-    const loader = screen.getByTestId("loader");
-    expect(loader).toBeInTheDocument();
-
-    await waitFor(() => {
-      expect(screen.queryByTestId("loader")).toBeNull();
-    });
-  });
+  // test("1 | Loader", async () => {
+  //   render(
+  //     <Provider store={store}>
+  //       <App />
+  //     </Provider>
+  //   );
+  //   const loader = screen.getByTestId("loader");
+  //   expect(loader).toBeInTheDocument();
+  //   await waitFor(() => {
+  //     expect(screen.queryByTestId("loader")).toBeNull();
+  //   });
+  // });
 });

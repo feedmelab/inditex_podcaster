@@ -1,19 +1,80 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPodcasts } from "../../features/podcast/podcastSlice";
-import "./PodcastList.module.css";
+import "./PodcastList.css";
+
 const PodcastList = () => {
   const dispatch = useDispatch();
-  const { podcasts } = useSelector((state) => state.podcast);
+  const { podcasts, status, filter } = useSelector((state) => state.podcast);
+  const [shouldAnimate, setShouldAnimate] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchPodcasts());
-  }, [dispatch]);
+    if (status === "idle") {
+      dispatch(fetchPodcasts());
+    }
+  }, [dispatch, status]);
+
+  const filteredPodcasts = useMemo(
+    () =>
+      podcasts.filter((podcast) => {
+        const name = podcast["im:name"].label.toLowerCase();
+        const artist = podcast["im:artist"].label.toLowerCase();
+        const filterValue = filter.toLowerCase();
+        return name.includes(filterValue) || artist.includes(filterValue);
+      }),
+    [podcasts, filter]
+  );
+
+  useEffect(() => {
+    // Wait for the next render cycle before applying the fade-in class
+    setTimeout(() => {
+      setShouldAnimate(true);
+    }, 0);
+  }, [filteredPodcasts]);
+
+  if (status === "idle" || status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (status === "failed") {
+    console.error("Error loading podcasts");
+  }
 
   return (
     <div>
       <div data-testid='podcast-item'>
-        <ul></ul>
+        <ul className='podcast-container'>
+          {filteredPodcasts?.length ? (
+            filteredPodcasts.map((podcast, index) => (
+              <li
+                key={index}
+                className={`podcastitem`}
+                data-testid='podcast-item'
+                onClick={() => console.log("click")}
+              >
+                <div className='card podcast-data px-2'>
+                  {podcast["im:image"][0] && (
+                    <div className='avatar'>
+                      <img
+                        data-testid='podcast-image'
+                        src={podcast && podcast["im:image"][0].label}
+                        alt={podcast && podcast["im:name"].label}
+                      />
+                    </div>
+                  )}
+                  <h2 data-testid='podcast-name'>
+                    {podcast["im:name"].label.toUpperCase()}
+                  </h2>
+                  <p data-testid='podcast-author'>
+                    Author: {podcast["im:artist"].label}
+                  </p>
+                </div>
+              </li>
+            ))
+          ) : (
+            <p>No se han encontrado podcasts.</p>
+          )}
+        </ul>
       </div>
     </div>
   );

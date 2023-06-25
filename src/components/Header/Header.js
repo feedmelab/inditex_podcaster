@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filterPodcasts } from "../../features/podcast/podcastSlice";
+import { updateFilter } from "../../features/podcast/podcastSlice";
 
 const Header = () => {
   const status = useSelector((state) => state.podcast.status);
+  const { podcasts } = useSelector((state) => state.podcast);
   const dispatch = useDispatch();
+  const [filter, setFilter] = useState("");
+  const filteredPodcasts = useSelector(
+    (state) => state.podcast.filteredPodcasts
+  );
+
+  const handleInputChange = (e) => {
+    setFilter(e.target.value);
+    dispatch(updateFilter(e.target.value));
+  };
   return (
     <section className='header'>
       <nav>
@@ -19,12 +29,14 @@ const Header = () => {
           )}
         </div>
         <div className='search-area form-group'>
-          <label htmlFor=''>100</label>
+          <label htmlFor='podcasts-length' data-testid='podcasts-length'>
+            {filter ? filteredPodcasts.length : podcasts.length}
+          </label>
           <input
             type='text'
             name='input-search'
-            className=''
-            onChange={(e) => dispatch(filterPodcasts(e.target.value))}
+            value={filter}
+            onChange={handleInputChange}
           />
         </div>
       </nav>
