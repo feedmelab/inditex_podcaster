@@ -2,7 +2,7 @@
 
 In the project directory, you can run:
 
-### Start
+### `Start`
 
 git clone https://github.com/feedmelab/inditex_podcaster.git \
 cd inditex_podcaster
