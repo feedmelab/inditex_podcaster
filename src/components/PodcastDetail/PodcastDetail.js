@@ -1,19 +1,27 @@
 import React, { useEffect } from "react";
 import { fetchPodcastDetails } from "../../features/podcast/podcastSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
+
 import "./PodcastDetail.css";
 
 const PodcastDetail = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { summary } = location.state;
+  const { summary } = location.state ?? {};
   const { podcastId } = useParams();
-  const dispatch = useDispatch();
+
   const { podcastDetails, isFetchingDetails } = useSelector(
-    (state) => state.podcast
+    (state) =>
+      state.podcast ?? {
+        podcasts: [],
+        podcastDetails: null,
+        isFetchingDetails: false,
+      }
   );
+
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchPodcastDetails(podcastId));
   }, [dispatch, podcastId]);
@@ -21,7 +29,16 @@ const PodcastDetail = () => {
   const updatedResults = podcastDetails?.filter((_, index) => index !== 0);
 
   const handleEpisodeClick = (podcastId, episodeId) => {
-    navigate(`/podcast/${podcastId}/episode/${episodeId}`);
+    const selectedEpisode = updatedResults.find(
+      (episode) => episode.trackId === episodeId
+    );
+    navigate(`/podcast/${podcastId}/episode/${episodeId}`, {
+      state: {
+        summary,
+        artistName: podcastDetails[0]?.artistName,
+        podcastDetails: [selectedEpisode],
+      },
+    });
   };
 
   if (!podcastDetails || isFetchingDetails) {
@@ -31,16 +48,31 @@ const PodcastDetail = () => {
   return (
     <div className='container wrapper-details'>
       <div className='card barra-lateral'>
-        <img
-          src={podcastDetails[0]?.artworkUrl600}
-          alt={podcastDetails[0].collectionName}
-        />
+        <Link
+          to={".."}
+          onClick={(e) => {
+            e.preventDefault();
+            navigate(-1);
+          }}
+        >
+          {" "}
+          <img
+            className='grow-effect'
+            src={podcastDetails[0]?.artworkUrl600}
+            alt={podcastDetails[0].collectionName}
+            onError={(e) => {
+              e.target.src = "/img/404.jpeg";
+            }}
+          />
+        </Link>
         <hr />
         <h2>{podcastDetails[0]?.collectionName}</h2>
         <h3>by {podcastDetails[0]?.artistName}</h3>
         <hr />
         <h4>Description:</h4>
-        <p>[{summary}...]</p>
+        <div>
+          <p>{summary}</p>
+        </div>
       </div>
       <div className='wrapper-column'>
         <div className='barra-episodios card'>
@@ -68,7 +100,7 @@ const PodcastDetail = () => {
                     <td>
                       <span
                         onClick={() =>
-                          handleEpisodeClick(podcastId, episode.id)
+                          handleEpisodeClick(podcastId, episode.trackId)
                         }
                       >
                         {episode?.trackName}

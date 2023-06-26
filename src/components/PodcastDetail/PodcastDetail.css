@@ -15,6 +15,11 @@
   padding-top: 2rem !important;
   align-items: center;
 }
+.barra-lateral a {
+  margin: 0px !important;
+  padding: 0px !important;
+  text-align: center !important;
+}
 .barra-lateral img {
   width: 50%;
   object-fit: cover;
@@ -28,10 +33,19 @@
 }
 .barra-lateral h3,
 .barra-lateral p {
+  display: flex;
   font-size: 0.6rem;
   align-self: flex-start;
   padding-left: 1rem;
   font-style: italic;
+}
+
+.barra-lateral div p {
+  display: flex;
+  width: 10rem;
+  height: auto;
+  flex-direction: column;
+  white-space: pre-line !important;
 }
 .barra-lateral hr {
   width: 10rem;
@@ -43,10 +57,7 @@
   width: 60%;
 }
 .barra-episodios {
-  width: 100%;
-  margin-top: 2rem;
   height: 3rem !important;
-  /*padding: var(--min-spacer); */
   padding-left: calc(var(--min-spacer) * 4) !important;
 }
 .barra-episodios span {
@@ -65,7 +76,9 @@ table {
   width: 100%;
   font-size: 0.8rem;
 }
-
+table span {
+  cursor: pointer;
+}
 thead,
 tbody,
 th,

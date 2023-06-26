@@ -10,7 +10,6 @@ export const fetchPodcastDetails = createAsyncThunk(
     );
     const data = await response.json();
     const parsedData = JSON.parse(data.contents);
-    //console.log("parsedData details", parsedData);
     return parsedData.results;
   }
 );
@@ -25,8 +24,6 @@ export const fetchPodcasts = createAsyncThunk(
     );
     const data = await response.json();
     const parsedData = JSON.parse(data.contents);
-    //return parsedData.feed.entry;
-
     return parsedData.feed.entry.map((entry) => ({
       id: entry.id.attributes["im:id"],
       summary: entry.summary?.label || "",
@@ -61,6 +58,7 @@ const podcastSlice = createSlice({
     isFetchingDetails: false,
     podcastDetails: null,
     podcastDetailsCache: {},
+    summary: null,
   },
   reducers: {
     updateFilter: (state, action) => {
@@ -89,7 +87,7 @@ const podcastSlice = createSlice({
       .addCase(fetchPodcastDetails.fulfilled, (state, action) => {
         state.isFetchingDetails = false;
         state.podcastDetails = action.payload;
-        
+
         const podcastId = action.meta.arg;
         // Comprobamos si los detalles del podcast están en la caché
         const cachedDetails = state.podcastDetailsCache[podcastId];
@@ -103,10 +101,11 @@ const podcastSlice = createSlice({
           state.podcastDetailsCache[podcastId] = {
             lastFetchDate: currentDate,
             details: action.payload,
+            summary: action.payload.summary,
+            podcastDetails: action.payload.podcastDetails,
           };
-
-          
-          state.podcastDetails = action.payload;
+          state.summary = action.payload.summary;
+          state.podcastDetails = action.payload.podcastDetails;
         }
       })
       .addCase(fetchPodcastDetails.rejected, (state) => {

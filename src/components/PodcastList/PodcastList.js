@@ -12,7 +12,7 @@ const PodcastList = () => {
 
   const handlePodcastClick = (podcast) => {
     navigate(`/podcast/${podcast.id}`, {
-      state: { summary: podcast.summary.substring(0, 250) },
+      state: { summary: podcast.summary },
     });
   };
 
@@ -53,13 +53,16 @@ const PodcastList = () => {
                 data-testid='podcast-item'
                 onClick={() => handlePodcastClick(podcast)}
               >
-                <div className='card podcast-data px-2'>
+                <div className='card podcast-data px-2 grow-effect'>
                   {podcast["im:image"][0] && (
                     <div className='avatar'>
                       <img
                         data-testid='podcast-image'
                         src={podcast && podcast["im:image"][2].label}
                         alt={podcast && podcast["im:name"].label}
+                        onError={(e) => {
+                          e.target.src = "/img/404.jpeg";
+                        }}
                       />
                     </div>
                   )}
