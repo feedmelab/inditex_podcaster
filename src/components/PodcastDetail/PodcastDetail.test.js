@@ -93,7 +93,7 @@ const store = mockStore(initialState);
 
 test("Mostrar los detalles correctamente", () => {
   render(
-    <MemoryRouter initialEntries={[`/podcast/12345`]}>
+    <MemoryRouter initialEntries={[`/podcast/934552872`]}>
       <Provider store={store}>
         <Routes>
           <Route path='/podcast/:podcastId' element={<PodcastDetail />} />

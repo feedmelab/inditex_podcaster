@@ -1,0 +1,93 @@
+.wrapper-details {
+  display: flex;
+  flex-wrap: row wrap;
+  justify-content: space-evenly;
+
+  width: 100%;
+  padding-bottom: 2rem;
+}
+.barra-lateral {
+  margin-top: 2rem;
+  width: 12rem;
+  display: flex;
+  justify-content: flex-start;
+  padding: 1rem !important;
+  padding-top: 2rem !important;
+  align-items: center;
+}
+.barra-lateral img {
+  width: 50%;
+  object-fit: cover;
+}
+.barra-lateral h2,
+.barra-lateral h4 {
+  align-self: flex-start;
+  padding-left: 1rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+.barra-lateral h3,
+.barra-lateral p {
+  font-size: 0.6rem;
+  align-self: flex-start;
+  padding-left: 1rem;
+  font-style: italic;
+}
+.barra-lateral hr {
+  width: 10rem;
+  color: var(--bar-color);
+}
+.wrapper-column {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+.barra-episodios {
+  width: 100%;
+  margin-top: 2rem;
+  height: 3rem !important;
+  /*padding: var(--min-spacer); */
+  padding-left: calc(var(--min-spacer) * 4) !important;
+}
+.barra-episodios span {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+.list-episodios {
+  width: 100%;
+  min-height: 21rem;
+  margin-top: 1rem;
+  padding: 1rem !important;
+}
+/* Define the table */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.8rem;
+}
+
+thead,
+tbody,
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+thead th {
+  border-bottom: 1px solid rgb(215, 215, 213) !important;
+}
+thead th:first-child,
+tbody td:first-child {
+  width: 65%;
+}
+tbody td:first-child {
+  color: var(--primary-color);
+}
+tbody:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tbody:nth-child(odd) {
+  background-color: #ffffff;
+}

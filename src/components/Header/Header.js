@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { updateFilter } from "../../features/podcast/podcastSlice";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
+  const location = useLocation();
+  const showInput = !location.pathname.includes("podcast");
   const status = useSelector((state) => state.podcast.status);
+  const isFetchingDetails = useSelector(
+    (state) => state.podcast.isFetchingDetails
+  );
   const { podcasts } = useSelector((state) => state.podcast);
   const dispatch = useDispatch();
   const [filter, setFilter] = useState("");
@@ -19,26 +26,28 @@ const Header = () => {
     <section className='header'>
       <nav>
         <div className='nav-area'>
-          <a href='/' alt='Incio'>
+          <Link to='/' alt='Incio'>
             Podcaster
-          </a>
-          {status === "loading" && (
+          </Link>
+          {(status === "loading" || isFetchingDetails) && (
             <span data-testid='loader'>
               <i className='gg-spinner'></i>
             </span>
           )}
         </div>
-        <div className='search-area form-group'>
-          <label htmlFor='podcasts-length' data-testid='podcasts-length'>
-            {filter ? filteredPodcasts.length : podcasts.length}
-          </label>
-          <input
-            type='text'
-            name='input-search'
-            value={filter}
-            onChange={handleInputChange}
-          />
-        </div>
+        {showInput && (
+          <div className='search-area form-group'>
+            <label htmlFor='podcasts-length' data-testid='podcasts-length'>
+              {filter ? filteredPodcasts.length : podcasts.length}
+            </label>
+            <input
+              type='text'
+              name='input-search'
+              value={filter}
+              onChange={handleInputChange}
+            />
+          </div>
+        )}
       </nav>
     </section>
   );

@@ -1,5 +1,20 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+export const fetchPodcastDetails = createAsyncThunk(
+  "podcast/fetchPodcastDetails",
+  async (podcastId) => {
+    const response = await fetch(
+      `https://api.allorigins.win/get?url=${encodeURIComponent(
+        `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=20`
+      )}`
+    );
+    const data = await response.json();
+    const parsedData = JSON.parse(data.contents);
+    //console.log("parsedData details", parsedData);
+    return parsedData.results;
+  }
+);
+
 export const fetchPodcasts = createAsyncThunk(
   "podcast/fetchPodcasts",
   async () => {
@@ -11,7 +26,10 @@ export const fetchPodcasts = createAsyncThunk(
     const data = await response.json();
     const parsedData = JSON.parse(data.contents);
     //return parsedData.feed.entry;
+
     return parsedData.feed.entry.map((entry) => ({
+      id: entry.id.attributes["im:id"],
+      summary: entry.summary?.label || "",
       "im:name": { label: entry["im:name"].label },
       "im:artist": { label: entry["im:artist"].label },
       "im:image": entry["im:image"].map((image) => ({
@@ -40,6 +58,9 @@ const podcastSlice = createSlice({
     lastFetch: null,
     filter: "",
     filteredPodcasts: [],
+    isFetchingDetails: false,
+    podcastDetails: null,
+    podcastDetailsCache: {},
   },
   reducers: {
     updateFilter: (state, action) => {
@@ -61,6 +82,35 @@ const podcastSlice = createSlice({
       .addCase(fetchPodcasts.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(fetchPodcastDetails.pending, (state) => {
+        state.isFetchingDetails = true;
+      })
+      .addCase(fetchPodcastDetails.fulfilled, (state, action) => {
+        state.isFetchingDetails = false;
+        state.podcastDetails = action.payload;
+        
+        const podcastId = action.meta.arg;
+        // Comprobamos si los detalles del podcast están en la caché
+        const cachedDetails = state.podcastDetailsCache[podcastId];
+        const currentDate = new Date().toDateString();
+
+        if (cachedDetails && cachedDetails.lastFetchDate === currentDate) {
+          // Utilizamos los detalles almacenados en la caché
+          state.podcastDetails = cachedDetails.details;
+        } else {
+          // Almacenamos los nuevos detalles en la caché
+          state.podcastDetailsCache[podcastId] = {
+            lastFetchDate: currentDate,
+            details: action.payload,
+          };
+
+          
+          state.podcastDetails = action.payload;
+        }
+      })
+      .addCase(fetchPodcastDetails.rejected, (state) => {
+        state.isFetchingDetails = false;
       });
   },
 });

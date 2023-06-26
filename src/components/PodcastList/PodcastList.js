@@ -1,12 +1,20 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPodcasts } from "../../features/podcast/podcastSlice";
 import "./PodcastList.css";
 
 const PodcastList = () => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const { podcasts, status, filter } = useSelector((state) => state.podcast);
-  const [shouldAnimate, setShouldAnimate] = useState(false);
+
+  const handlePodcastClick = (podcast) => {
+    navigate(`/podcast/${podcast.id}`, {
+      state: { summary: podcast.summary.substring(0, 250) },
+    });
+  };
 
   useEffect(() => {
     if (status === "idle") {
@@ -24,13 +32,6 @@ const PodcastList = () => {
       }),
     [podcasts, filter]
   );
-
-  useEffect(() => {
-    // Wait for the next render cycle before applying the fade-in class
-    setTimeout(() => {
-      setShouldAnimate(true);
-    }, 0);
-  }, [filteredPodcasts]);
 
   if (status === "idle" || status === "loading") {
     return <div>Loading...</div>;
@@ -50,14 +51,14 @@ const PodcastList = () => {
                 key={index}
                 className={`podcastitem`}
                 data-testid='podcast-item'
-                onClick={() => console.log("click")}
+                onClick={() => handlePodcastClick(podcast)}
               >
                 <div className='card podcast-data px-2'>
                   {podcast["im:image"][0] && (
                     <div className='avatar'>
                       <img
                         data-testid='podcast-image'
-                        src={podcast && podcast["im:image"][0].label}
+                        src={podcast && podcast["im:image"][2].label}
                         alt={podcast && podcast["im:name"].label}
                       />
                     </div>

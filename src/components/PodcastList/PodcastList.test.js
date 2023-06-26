@@ -14,7 +14,8 @@ import Header from "../Header/Header";
 import configureStore from "redux-mock-store";
 
 import { updateFilter } from "../../features/podcast/podcastSlice";
-import { MemoryRouter } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 const mockStore = configureStore([]);
 let store;
 const initialState = {
@@ -104,8 +105,10 @@ describe("PodcastList", () => {
   it("should have an image, name, and link for each podcast after data loading", async () => {
     renderWithStore(
       <div>
-        <Header />
-        <PodcastList />
+        <Router>
+          <Header />
+          <PodcastList />
+        </Router>
       </div>
     );
 
@@ -135,8 +138,10 @@ describe("PodcastList and Header", () => {
   it("Actualiza cantidad de podcast en función del resultado de filtrado", () => {
     renderWithStore(
       <div>
-        <Header />
-        <PodcastList />
+        <Router>
+          <Header />
+          <PodcastList />
+        </Router>
       </div>
     );
 
@@ -151,8 +156,10 @@ describe("PodcastList and Header", () => {
   it("Filtrado con name y artist", () => {
     renderWithStore(
       <div>
-        <Header />
-        <PodcastList />
+        <Router>
+          <Header />
+          <PodcastList />
+        </Router>
       </div>
     );
 
