@@ -1,11 +1,11 @@
-# Start
-
-git clone https://github.com/feedmelab/inditex_podcaster.git\
-cd inditex_podcaster
-
 ## Available Scripts
 
 In the project directory, you can run:
+
+### Start
+
+git clone https://github.com/feedmelab/inditex_podcaster.git \
+cd inditex_podcaster
 
 ### `yarn install`
 
