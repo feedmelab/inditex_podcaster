@@ -1,6 +1,6 @@
 # Start
 
-git clone https://github.com/feedmelab/inditex_podcaster.git
+git clone https://github.com/feedmelab/inditex_podcaster.git\
 cd inditex_podcaster
 
 ## Available Scripts
