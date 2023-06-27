@@ -48,7 +48,7 @@ const PodcastDetail = () => {
   };
 
   if (!podcastDetails || isFetchingDetails) {
-    return <div>Loading...</div>;
+    return <div>Loading podcast episodes...</div>;
   }
 
   return (

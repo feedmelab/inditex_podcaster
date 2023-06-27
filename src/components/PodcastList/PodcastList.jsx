@@ -40,15 +40,11 @@ const PodcastList = () => {
     [podcasts, filter]
   );
 
-  if (status === "idle" || status === "loading") {
-    return <div>Loading...</div>;
+  if (error) {
+    return <div>Error loading podcasts: {error}. Please try again later.</div>;
   }
-  if (status === "failed") {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!filteredPodcasts) {
-    return <div>No Podcast Found...</div>;
+  if (status === "loading" || status === "idle") {
+    return <div>Loading podcasts...</div>;
   }
 
   return (
