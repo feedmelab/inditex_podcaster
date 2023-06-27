@@ -1,31 +1,27 @@
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import "./EpisodeDetail.css";
-
 import { formatDescription } from "../../utils/utils";
 import { useSelector } from "react-redux";
+import {
+  BarraLateral,
+  ListEpisodio,
+  WrapperColumn,
+  WrapperDetails,
+} from "./Episodedetail.styles";
 
 const EpisodeDetail = () => {
   const location = useLocation();
   const { summary, podcastDetails, artistName } = location.state ?? {
     summary: null,
     podcastDetails: null,
-    artistName: null,
   };
-  const { isFetchingDetails } = useSelector(
-    (state) =>
-      state.podcast ?? {
-        podcasts: [],
-        podcastDetails: null,
-        isFetchingDetails: false,
-      }
-  );
+  const { isFetchingDetails } = useSelector((state) => state.podcast);
   const navigate = useNavigate();
   if (!podcastDetails || isFetchingDetails) {
     return <div>Loading...</div>;
   }
   return (
-    <div className='container wrapper-details'>
-      <div className='card barra-lateral'>
+    <WrapperDetails className='container'>
+      <BarraLateral className='card'>
         <Link
           data-testid='link-back'
           to={".."}
@@ -48,9 +44,9 @@ const EpisodeDetail = () => {
         <div>
           <p>{summary}</p>
         </div>
-      </div>
-      <div className='wrapper-column'>
-        <div className='list-episodio card'>
+      </BarraLateral>
+      <WrapperColumn>
+        <ListEpisodio className='card'>
           <h2 data-testid='titulo-podcast'>
             {podcastDetails[0] && podcastDetails[0]?.trackName}
           </h2>
@@ -71,9 +67,9 @@ const EpisodeDetail = () => {
               Your browser does not support the audio element.
             </audio>
           </div>
-        </div>
-      </div>
-    </div>
+        </ListEpisodio>
+      </WrapperColumn>
+    </WrapperDetails>
   );
 };
 

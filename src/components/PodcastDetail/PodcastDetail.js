@@ -4,7 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 
-import "./PodcastDetail.css";
+import {
+  BarraEpisodios,
+  BarraLateral,
+  ListEpisodios,
+  WrapperColumn,
+  WrapperDetails,
+} from "./PodcastDetail.styles";
 
 const PodcastDetail = () => {
   const location = useLocation();
@@ -46,8 +52,8 @@ const PodcastDetail = () => {
   }
 
   return (
-    <div className='container wrapper-details'>
-      <div className='card barra-lateral'>
+    <WrapperDetails className='container'>
+      <BarraLateral className='card'>
         <Link
           to={".."}
           onClick={(e) => {
@@ -73,12 +79,12 @@ const PodcastDetail = () => {
         <div>
           <p>{summary}</p>
         </div>
-      </div>
-      <div className='wrapper-column'>
-        <div className='barra-episodios card'>
+      </BarraLateral>
+      <WrapperColumn>
+        <BarraEpisodios className='card'>
           <span>Episodes: {podcastDetails.length - 1}</span>
-        </div>
-        <div className='list-episodios card'>
+        </BarraEpisodios>
+        <ListEpisodios className='card'>
           <table>
             <thead>
               <tr>
@@ -115,9 +121,9 @@ const PodcastDetail = () => {
               );
             })}
           </table>
-        </div>
-      </div>
-    </div>
+        </ListEpisodios>
+      </WrapperColumn>
+    </WrapperDetails>
   );
 };
 

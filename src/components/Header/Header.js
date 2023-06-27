@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateFilter } from "../../features/podcast/podcastSlice";
 import { Link, useLocation } from "react-router-dom";
 
+import { CHeader, CNavArea, SearchArea } from "./Header.styles";
+
 const Header = () => {
   const location = useLocation();
   const showInput = !location.pathname.includes("podcast");
@@ -23,32 +25,34 @@ const Header = () => {
     dispatch(updateFilter(e.target.value));
   };
   return (
-    <section className='header'>
-      <nav>
-        <div className='nav-area'>
-          <Link to='/' alt='Incio'>
-            Podcaster
-          </Link>
-          {(status === "loading" || isFetchingDetails) && (
-            <span data-testid='loader'>
-              <i className='gg-spinner'></i>
-            </span>
+    <section>
+      <CHeader>
+        <nav>
+          <CNavArea>
+            <Link to='/' alt='Incio'>
+              Podcaster
+            </Link>
+            {(status === "loading" || isFetchingDetails) && (
+              <span data-testid='loader'>
+                <i className='gg-spinner'></i>
+              </span>
+            )}
+          </CNavArea>
+          {showInput && (
+            <SearchArea className='form-group'>
+              <label htmlFor='podcasts-length' data-testid='podcasts-length'>
+                {filter ? filteredPodcasts.length : podcasts.length}
+              </label>
+              <input
+                type='text'
+                name='input-search'
+                value={filter}
+                onChange={handleInputChange}
+              />
+            </SearchArea>
           )}
-        </div>
-        {showInput && (
-          <div className='search-area form-group'>
-            <label htmlFor='podcasts-length' data-testid='podcasts-length'>
-              {filter ? filteredPodcasts.length : podcasts.length}
-            </label>
-            <input
-              type='text'
-              name='input-search'
-              value={filter}
-              onChange={handleInputChange}
-            />
-          </div>
-        )}
-      </nav>
+        </nav>
+      </CHeader>
     </section>
   );
 };
