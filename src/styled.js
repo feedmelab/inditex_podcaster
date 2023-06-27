@@ -21,6 +21,10 @@ export const GlobalStyle = createGlobalStyle`
 	body {
         font-family: "Work Sans", sans-serif;    
 	}
+    a{
+        text-decoration: none !important;
+        color: inherit !important;
+    }
     @font-face {
         font-family: 'Dosis', sans-serif;
         src: url(${font4});

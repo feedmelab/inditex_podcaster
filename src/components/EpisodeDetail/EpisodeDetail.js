@@ -38,7 +38,18 @@ const EpisodeDetail = () => {
           />
         </Link>
         <hr />
-        <h2>{podcastDetails[0] && podcastDetails[0]?.collectionName}</h2>
+        <h2>
+          <Link
+            data-testid='link-back'
+            to={".."}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(-1);
+            }}
+          >
+            {podcastDetails[0] && podcastDetails[0]?.collectionName}
+          </Link>
+        </h2>
         <h3>by {podcastDetails[0] && artistName}</h3>
         <hr />
         <h4>Description:</h4>
