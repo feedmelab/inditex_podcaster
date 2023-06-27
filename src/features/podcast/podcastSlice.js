@@ -2,38 +2,56 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchPodcastDetails = createAsyncThunk(
   "podcast/fetchPodcastDetails",
-  async (podcastId) => {
-    const response = await fetch(
-      `https://api.allorigins.win/get?url=${encodeURIComponent(
-        `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=20`
-      )}`
-    );
-    const data = await response.json();
-    const parsedData = JSON.parse(data.contents);
-    return parsedData.results;
+  async (podcastId, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        `https://api.allorigins.win/get?url=${encodeURIComponent(
+          `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=20`
+        )}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Server response was not ok.");
+      }
+
+      const data = await response.json();
+      const parsedData = JSON.parse(data.contents);
+      return parsedData.results;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
 export const fetchPodcasts = createAsyncThunk(
   "podcast/fetchPodcasts",
-  async () => {
-    const response = await fetch(
-      `https://api.allorigins.win/get?url=${encodeURIComponent(
-        "https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json"
-      )}`
-    );
-    const data = await response.json();
-    const parsedData = JSON.parse(data.contents);
-    return parsedData.feed.entry.map((entry) => ({
-      id: entry.id.attributes["im:id"],
-      summary: entry.summary?.label || "",
-      "im:name": { label: entry["im:name"].label },
-      "im:artist": { label: entry["im:artist"].label },
-      "im:image": entry["im:image"].map((image) => ({
-        label: image.label,
-        attributes: { height: image.attributes.height },
-      })),
-    }));
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        `https://api.allorigins.win/get?url=${encodeURIComponent(
+          "https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json"
+        )}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Server response was not ok.");
+      }
+
+      const data = await response.json();
+      const parsedData = JSON.parse(data.contents);
+      return parsedData.feed.entry.map((entry) => ({
+        id: entry.id.attributes["im:id"],
+        summary: entry.summary?.label || "",
+        "im:name": { label: entry["im:name"].label },
+        "im:artist": { label: entry["im:artist"].label },
+        "im:image": entry["im:image"].map((image) => ({
+          label: image.label,
+          attributes: { height: image.attributes.height },
+        })),
+      }));
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 

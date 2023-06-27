@@ -13,19 +13,21 @@ const PodcastList = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { podcasts, status, filter } = useSelector((state) => state.podcast);
-
-  const handlePodcastClick = (podcast) => {
-    navigate(`/podcast/${podcast.id}`, {
-      state: { summary: podcast.summary },
-    });
-  };
+  const { podcasts, status, filter, error } = useSelector(
+    (state) => state.podcast
+  );
 
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchPodcasts());
     }
   }, [dispatch, status]);
+
+  const handlePodcastClick = (podcast) => {
+    navigate(`/podcast/${podcast.id}`, {
+      state: { summary: podcast.summary },
+    });
+  };
 
   const filteredPodcasts = useMemo(
     () =>
@@ -41,9 +43,12 @@ const PodcastList = () => {
   if (status === "idle" || status === "loading") {
     return <div>Loading...</div>;
   }
-
   if (status === "failed") {
-    console.error("Error loading podcasts");
+    return <div>Error: {error}</div>;
+  }
+
+  if (!filteredPodcasts) {
+    return <div>No Podcast Found...</div>;
   }
 
   return (
