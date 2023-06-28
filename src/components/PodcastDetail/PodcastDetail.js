@@ -59,7 +59,7 @@ const PodcastDetail = () => {
   if (!podcastDetails || isFetchingDetails) {
     return (
       <div>
-        <div className='my-3'>Loading podcast episode...</div>
+        <div className='my-3'>Loading podcast episodes...</div>
         <ProgressBar data-testid='loader'>{renderProgressBar()}</ProgressBar>
       </div>
     );

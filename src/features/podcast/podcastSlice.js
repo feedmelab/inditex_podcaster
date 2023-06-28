@@ -7,7 +7,15 @@ export const fetchPodcastDetails = createAsyncThunk(
       const response = await fetch(
         `https://api.allorigins.win/get?url=${encodeURIComponent(
           `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=20`
-        )}`
+        )}`,
+        {
+          onDownloadProgress: function (progressEvent) {
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            // dispatch(updateDownloadProgress(percentCompleted));
+          },
+        }
       );
 
       if (!response.ok) {
