@@ -5,22 +5,25 @@ import PodcastList from "./components/PodcastList/PodcastList";
 import PodcastDetail from "./components/PodcastDetail/PodcastDetail";
 import EpisodeDetail from "./components/EpisodeDetail/EpisodeDetail";
 import "./App.css";
+import { StyleSheetManager } from "styled-components";
 
 function App() {
   return (
-    <Router>
-      <div className='container App '>
-        <Header />
-        <Routes>
-          <Route exact path='/' element={<PodcastList />} />
-          <Route path='/podcast/:podcastId' element={<PodcastDetail />} />
-          <Route
-            path='/podcast/:podcastId/episode/:episodeId'
-            element={<EpisodeDetail />}
-          />
-        </Routes>
-      </div>
-    </Router>
+    <StyleSheetManager shouldForwardProp={(prop) => prop !== "theme"}>
+      <Router>
+        <div className='container App '>
+          <Header />
+          <Routes>
+            <Route exact path='/' element={<PodcastList />} />
+            <Route path='/podcast/:podcastId' element={<PodcastDetail />} />
+            <Route
+              path='/podcast/:podcastId/episode/:episodeId'
+              element={<EpisodeDetail />}
+            />
+          </Routes>
+        </div>
+      </Router>
+    </StyleSheetManager>
   );
 }
 
