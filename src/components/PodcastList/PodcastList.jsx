@@ -7,6 +7,7 @@ import {
   PodcastContainer,
   PodcastData,
   PodcastItem,
+  ProgressBar,
 } from "./PodcastList.styles";
 
 const PodcastList = () => {
@@ -28,7 +29,17 @@ const PodcastList = () => {
       state: { summary: podcast.summary },
     });
   };
+  const downloadProgress = useSelector(
+    (state) => state.podcast.downloadProgress
+  );
 
+  const renderProgressBar = () => {
+    if (downloadProgress !== null) {
+      return <progress value={downloadProgress} max='100' />;
+    } else {
+      return <i className='gg-spinner'></i>;
+    }
+  };
   const filteredPodcasts = useMemo(
     () =>
       podcasts.filter((podcast) => {
@@ -44,7 +55,9 @@ const PodcastList = () => {
     return <div>Error loading podcasts: {error}. Please try again later.</div>;
   }
   if (status === "loading" || status === "idle") {
-    return <div>Loading podcasts...</div>;
+    return (
+      <ProgressBar data-testid='loader'>{renderProgressBar()}</ProgressBar>
+    );
   }
 
   return (

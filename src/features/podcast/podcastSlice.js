@@ -90,10 +90,17 @@ const podcastSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchPodcasts.fulfilled, (state, action) => {
+        let oneHourAgo = Date.now() - 60 * 60 * 1000;
+
+        if (state.lastFetch > oneHourAgo) {
+          state.filteredPodcasts = applyFilter(state.podcasts, state.filter);
+        } else {
+          // Descargamos y almacenamos los nuevos podcasts en la caché
+          state.podcasts = action.payload;
+          state.lastFetch = Date.now();
+          state.filteredPodcasts = applyFilter(action.payload, state.filter);
+        }
         state.status = "succeeded";
-        state.podcasts = action.payload;
-        state.lastFetch = Date.now();
-        state.filteredPodcasts = applyFilter(action.payload, state.filter);
       })
       .addCase(fetchPodcasts.rejected, (state, action) => {
         state.status = "failed";

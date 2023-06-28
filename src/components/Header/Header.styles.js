@@ -16,17 +16,6 @@ export const CNavArea = styled.div`
     font-size: 1.8rem;
     font-weight: bold;
   }
-  .progress-bar-container {
-    height: 20px;
-
-    border-radius: 10px;
-    overflow: hidden;
-  }
-
-  .progress-bar {
-    height: 100%;
-    width: 100%;
-  }
 `;
 export const SearchArea = styled.div`
   height: 2.53rem;

@@ -1,5 +1,19 @@
 import styled from "styled-components";
 
+export const ProgressBar = styled.span`
+  .progress-bar-container {
+    height: 20px;
+
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    width: 100%;
+    background: red;
+  }
+`;
 export const PodcastContainer = styled.ul`
   display: flex;
   flex-flow: row wrap;
