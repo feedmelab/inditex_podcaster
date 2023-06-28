@@ -36,8 +36,8 @@ export const fetchPodcasts = createAsyncThunk(
             const percentCompleted = Math.round(
               (progressEvent.loaded * 100) / 200001
             );
-            console.log("progressEvent:", progressEvent);
-            console.log("percentCompleted:", percentCompleted);
+            // console.log("progressEvent:", progressEvent);
+            // console.log("percentCompleted:", percentCompleted);
             dispatch(updateDownloadProgress(percentCompleted));
           },
         }
@@ -117,15 +117,15 @@ const podcastSlice = createSlice({
         state.podcastDetails = action.payload;
 
         const podcastId = action.meta.arg;
-        // Comprobamos si los detalles del podcast están en la caché
+
         const cachedDetails = state.podcastDetailsCache[podcastId];
         const currentDate = new Date().toDateString();
 
-        if (cachedDetails && cachedDetails.lastFetchDate === currentDate) {
-          // Utilizamos los detalles almacenados en la caché
+        let oneHourAgo = new Date();
+        oneHourAgo.setHours(oneHourAgo.getHours() - 1);
+        if (cachedDetails && new Date(cachedDetails.lastFetch) > oneHourAgo) {
           state.podcastDetails = cachedDetails.details;
         } else {
-          // Almacenamos los nuevos detalles en la caché
           state.podcastDetailsCache[podcastId] = {
             lastFetchDate: currentDate,
             details: action.payload,

@@ -31,7 +31,6 @@ const Header = () => {
     if (downloadProgress !== null) {
       return <progress value={downloadProgress} max='100' />;
     } else {
-      // Render a spinner or some other "indeterminate" progress indicator
       return <i className='gg-spinner'></i>;
     }
   };
