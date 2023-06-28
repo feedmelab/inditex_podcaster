@@ -11,13 +11,16 @@ import {
   WrapperColumn,
   WrapperDetails,
 } from "./PodcastDetail.styles";
+import { ProgressBar } from "../PodcastList/PodcastList.styles";
 
 const PodcastDetail = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { summary } = location.state ?? {};
   const { podcastId } = useParams();
-
+  const downloadProgress = useSelector(
+    (state) => state.podcast.downloadProgress
+  );
   const { podcastDetails, isFetchingDetails } = useSelector(
     (state) =>
       state.podcast ?? {
@@ -46,9 +49,20 @@ const PodcastDetail = () => {
       },
     });
   };
-
+  const renderProgressBar = () => {
+    if (downloadProgress !== null) {
+      return <progress value={downloadProgress} max='100' />;
+    } else {
+      return <i className='gg-spinner'></i>;
+    }
+  };
   if (!podcastDetails || isFetchingDetails) {
-    return <div>Loading podcast episodes...</div>;
+    return (
+      <div>
+        <div className='my-3'>Loading podcast episode...</div>
+        <ProgressBar data-testid='loader'>{renderProgressBar()}</ProgressBar>
+      </div>
+    );
   }
 
   return (

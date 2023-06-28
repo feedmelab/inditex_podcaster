@@ -20,6 +20,7 @@ const EpisodeDetail = () => {
   if (!podcastDetails || isFetchingDetails) {
     return <div>Loading...</div>;
   }
+
   return (
     <WrapperDetails className='container'>
       <BarraLateral className='card'>
