@@ -10,11 +10,11 @@ import { createGlobalStyle } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
     
     p {
-        font-family: "Pt Sans", sans-serif;
+        font-family: "Roboto", sans-serif;
     }
 
 	body {
-        font-family: "Pt Sans", sans-serif;    
+        font-family: "Roboto", sans-serif;    
 	}
     a{
         text-decoration: none !important;

@@ -24,6 +24,18 @@ const Header = () => {
     setFilter(e.target.value);
     dispatch(updateFilter(e.target.value));
   };
+  const downloadProgress = useSelector(
+    (state) => state.podcast.downloadProgress
+  );
+  const renderProgressBar = () => {
+    if (downloadProgress !== null) {
+      return <progress value={downloadProgress} max='100' />;
+    } else {
+      // Render a spinner or some other "indeterminate" progress indicator
+      return <i className='gg-spinner'></i>;
+    }
+  };
+
   return (
     <section>
       <CHeader>
@@ -32,6 +44,13 @@ const Header = () => {
             <Link to='/' alt='Incio'>
               Podcaster
             </Link>
+            {(status === "loading" || isFetchingDetails) && (
+              <div className='progress-bar-container'>
+                <span data-testid='loader' className='progress-bar'>
+                  {renderProgressBar()}
+                </span>
+              </div>
+            )}
             {(status === "loading" || isFetchingDetails) && (
               <span data-testid='loader'>
                 <i className='gg-spinner'></i>
