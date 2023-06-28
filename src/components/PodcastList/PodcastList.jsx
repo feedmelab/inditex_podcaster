@@ -12,8 +12,8 @@ import {
 
 const PodcastList = () => {
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
+
   const { podcasts, status, filter, error } = useSelector(
     (state) => state.podcast
   );

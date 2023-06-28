@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import axios from "axios";
 export const fetchPodcastDetails = createAsyncThunk(
   "podcast/fetchPodcastDetails",
   async (podcastId, { rejectWithValue }) => {
@@ -25,21 +25,33 @@ export const fetchPodcastDetails = createAsyncThunk(
 
 export const fetchPodcasts = createAsyncThunk(
   "podcast/fetchPodcasts",
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, dispatch }) => {
     try {
-      const response = await fetch(
+      const response = await axios.get(
         `https://api.allorigins.win/get?url=${encodeURIComponent(
           "https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json"
-        )}`
+        )}`,
+        {
+          responseType: "json",
+          onDownloadProgress: (progressEvent) => {
+            //console.log("PROGRESS EVENT: ", progressEvent);
+            const percentCompleted = Math.round(
+              (progressEvent.loaded / 204000) * 100
+            );
+            dispatch(updateDownloadProgress(percentCompleted));
+          },
+        }
       );
 
-      if (!response.ok) {
+      console.log(JSON.parse(response.data.contents));
+
+      if (response.status !== 200) {
         throw new Error("Server response was not ok.");
       }
 
-      const data = await response.json();
-      const parsedData = JSON.parse(data.contents);
-      return parsedData.feed.entry.map((entry) => ({
+      const parsedData = JSON.parse(response.data.contents);
+      console.log(parsedData);
+      const podcasts = parsedData.feed.entry.map((entry) => ({
         id: entry.id.attributes["im:id"],
         summary: entry.summary?.label || "",
         "im:name": { label: entry["im:name"].label },
@@ -49,6 +61,8 @@ export const fetchPodcasts = createAsyncThunk(
           attributes: { height: image.attributes.height },
         })),
       }));
+
+      return podcasts;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -77,11 +91,15 @@ const podcastSlice = createSlice({
     podcastDetails: null,
     podcastDetailsCache: {},
     summary: null,
+    downloadProgress: 0,
   },
   reducers: {
     updateFilter: (state, action) => {
       state.filter = action.payload;
       state.filteredPodcasts = applyFilter(state.podcasts, state.filter);
+    },
+    updateDownloadProgress: (state, action) => {
+      state.downloadProgress = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -139,6 +157,6 @@ const podcastSlice = createSlice({
   },
 });
 
-export const { updateFilter } = podcastSlice.actions;
+export const { updateFilter, updateDownloadProgress } = podcastSlice.actions;
 
 export default podcastSlice.reducer;
