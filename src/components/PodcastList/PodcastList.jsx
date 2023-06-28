@@ -29,17 +29,7 @@ const PodcastList = () => {
       state: { summary: podcast.summary },
     });
   };
-  const downloadProgress = useSelector(
-    (state) => state.podcast.downloadProgress
-  );
 
-  const renderProgressBar = () => {
-    if (downloadProgress !== null) {
-      return <progress value={downloadProgress} max='100' />;
-    } else {
-      return <i className='gg-spinner'></i>;
-    }
-  };
   const filteredPodcasts = useMemo(
     () =>
       podcasts.filter((podcast) => {
@@ -54,14 +44,6 @@ const PodcastList = () => {
   if (error) {
     console.error(`Error loading podcasts: ${error}. Please try again later.`);
     return <div>Error loading podcasts: {error}. Please try again later.</div>;
-  }
-  if (status === "loading" || status === "idle") {
-    return (
-      <div>
-        <div className='my-3'>Loading podcasts...</div>
-        <ProgressBar data-testid='loader'>{renderProgressBar()}</ProgressBar>
-      </div>
-    );
   }
 
   return (
@@ -97,7 +79,7 @@ const PodcastList = () => {
             </PodcastItem>
           ))
         ) : (
-          <p>No se han encontrado podcasts.</p>
+          <p>Descargando podcast, por favor espere...</p>
         )}
       </PodcastContainer>
     </div>

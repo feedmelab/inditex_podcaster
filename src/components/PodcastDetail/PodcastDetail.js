@@ -49,18 +49,11 @@ const PodcastDetail = () => {
       },
     });
   };
-  const renderProgressBar = () => {
-    if (downloadProgress !== null) {
-      return <progress value={downloadProgress} max='100' />;
-    } else {
-      return <i className='gg-spinner'></i>;
-    }
-  };
+
   if (!podcastDetails || isFetchingDetails) {
     return (
-      <div>
-        <div className='my-3'>Loading podcast episodes...</div>
-        <ProgressBar data-testid='loader'>{renderProgressBar()}</ProgressBar>
+      <div className='d-flex justify-content-end text-black-50  small '>
+        <center>loading podcast details</center>
       </div>
     );
   }

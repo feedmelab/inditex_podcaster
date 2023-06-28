@@ -1,27 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-export const fetchPodcastDetails = createAsyncThunk(
-  "podcast/fetchPodcastDetails",
-  async (podcastId, { rejectWithValue }) => {
-    try {
-      const response = await fetch(
-        `https://api.allorigins.win/get?url=${encodeURIComponent(
-          `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=20`
-        )}`
-      );
 
-      if (!response.ok) {
-        throw new Error("Server response was not ok.");
-      }
+import { loadAxiosProgress } from "axios-progress";
 
-      const data = await response.json();
-      const parsedData = JSON.parse(data.contents);
-      return parsedData.results;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
+loadAxiosProgress(axios);
 
 export const fetchPodcasts = createAsyncThunk(
   "podcast/fetchPodcasts",
@@ -34,9 +16,8 @@ export const fetchPodcasts = createAsyncThunk(
         {
           responseType: "json",
           onDownloadProgress: (progressEvent) => {
-            //console.log("PROGRESS EVENT: ", progressEvent);
             const percentCompleted = Math.round(
-              (progressEvent.loaded / 204000) * 100
+              (progressEvent.loaded * 100) / progressEvent.total
             );
             dispatch(updateDownloadProgress(percentCompleted));
           },
@@ -45,8 +26,8 @@ export const fetchPodcasts = createAsyncThunk(
 
       console.log(JSON.parse(response.data.contents));
 
-      if (response.status !== 200) {
-        throw new Error("Server response was not ok.");
+      if (!response.data) {
+        throw new Error("Server response was not as expected.");
       }
 
       const parsedData = JSON.parse(response.data.contents);
@@ -68,7 +49,41 @@ export const fetchPodcasts = createAsyncThunk(
     }
   }
 );
+export const fetchPodcastDetails = createAsyncThunk(
+  "podcast/fetchPodcastDetails",
+  async (podcastId, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await axios.get(
+        `https://api.allorigins.win/get?url=${encodeURIComponent(
+          `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=20`
+        )}`,
+        {
+          responseType: "json",
+          onDownloadProgress: (progressEvent) => {
+            console.log(
+              "Fetch Podcast Details PROGRESS EVENT: ",
+              progressEvent
+            );
+            const percentCompleted = Math.round(
+              (progressEvent.loaded / 20000) * 100
+            );
+            dispatch(updateDownloadProgress(percentCompleted));
+          },
+        }
+      );
 
+      if (!response.data || !response.data.contents) {
+        throw new Error("Server response was not as expected.");
+      }
+
+      const parsedData = await JSON.parse(response.data.contents);
+      dispatch(updateDownloadProgress(0));
+      return parsedData.results;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 const applyFilter = (podcasts, filterValue) => {
   const normalizedFilter = filterValue.toLowerCase();
   return podcasts.filter((podcast) => {

@@ -33,11 +33,11 @@ const Header = () => {
             <Link to='/' alt='Incio'>
               Podcaster
             </Link>
-            {(status === "loading" || isFetchingDetails) && (
+            {/* {(status === "loading" || isFetchingDetails) && (
               <span data-testid='loader'>
                 <i className='gg-spinner'></i>
               </span>
-            )}
+            )} */}
           </CNavArea>
           {showInput && (
             <SearchArea className='form-group'>

@@ -8,6 +8,7 @@
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
     "axios": "^1.4.0",
+    "axios-progress": "^0.0.3",
     "bootstrap": "^5.3.0",
     "history": "^5.3.0",
     "moment": "^2.29.4",
