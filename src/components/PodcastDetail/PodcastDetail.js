@@ -11,7 +11,10 @@ import {
   WrapperColumn,
   WrapperDetails,
 } from "./PodcastDetail.styles";
-import { ProgressBar } from "../PodcastList/PodcastList.styles";
+import {
+  PodcastContainer,
+  ProgressBar,
+} from "../PodcastList/PodcastList.styles";
 
 const PodcastDetail = () => {
   const location = useLocation();
@@ -52,8 +55,10 @@ const PodcastDetail = () => {
 
   if (!podcastDetails || isFetchingDetails) {
     return (
-      <div className='d-flex justify-content-end text-black-50  small '>
-        <center>loading podcast details</center>
+      <div data-testid='podcast-item'>
+        <PodcastContainer>
+          <p>Descargando listado de episodios, por favor espere...</p>
+        </PodcastContainer>
       </div>
     );
   }

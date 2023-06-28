@@ -79,7 +79,7 @@ const PodcastList = () => {
             </PodcastItem>
           ))
         ) : (
-          <p>Descargando podcast, por favor espere...</p>
+          <p>Descargando podcasts, por favor espere...</p>
         )}
       </PodcastContainer>
     </div>
