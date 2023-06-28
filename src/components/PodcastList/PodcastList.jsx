@@ -57,7 +57,7 @@ const PodcastList = () => {
   if (status === "loading" || status === "idle") {
     return (
       <div>
-        <div className='my-3'>Loading podcast...</div>
+        <div className='my-3'>Loading podcasts...</div>
         <ProgressBar data-testid='loader'>{renderProgressBar()}</ProgressBar>
       </div>
     );
