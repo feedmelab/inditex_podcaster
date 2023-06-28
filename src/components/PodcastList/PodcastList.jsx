@@ -52,6 +52,7 @@ const PodcastList = () => {
   );
 
   if (error) {
+    console.error(`Error loading podcasts: ${error}. Please try again later.`);
     return <div>Error loading podcasts: {error}. Please try again later.</div>;
   }
   if (status === "loading" || status === "idle") {
