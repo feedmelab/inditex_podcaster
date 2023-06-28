@@ -25,25 +25,20 @@ export const fetchPodcastDetails = createAsyncThunk(
 
 export const fetchPodcasts = createAsyncThunk(
   "podcast/fetchPodcasts",
-  async (_, { rejectWithValue, dispatch }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
+      const response = await fetch(
         `https://api.allorigins.win/get?url=${encodeURIComponent(
           "https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json"
-        )}`,
-        {
-          onDownloadProgress: function (progressEvent) {
-            const percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / 200001
-            );
-            // console.log("progressEvent:", progressEvent);
-            // console.log("percentCompleted:", percentCompleted);
-            dispatch(updateDownloadProgress(percentCompleted));
-          },
-        }
+        )}`
       );
 
-      const parsedData = JSON.parse(response.data.contents);
+      if (!response.ok) {
+        throw new Error("Server response was not ok.");
+      }
+
+      const data = await response.json();
+      const parsedData = JSON.parse(data.contents);
       return parsedData.feed.entry.map((entry) => ({
         id: entry.id.attributes["im:id"],
         summary: entry.summary?.label || "",
@@ -82,16 +77,11 @@ const podcastSlice = createSlice({
     podcastDetails: null,
     podcastDetailsCache: {},
     summary: null,
-    downloadProgress: 0,
   },
   reducers: {
     updateFilter: (state, action) => {
       state.filter = action.payload;
       state.filteredPodcasts = applyFilter(state.podcasts, state.filter);
-    },
-    updateDownloadProgress: (state, action) => {
-      console.log("PROGRESS: ", action.payload);
-      state.downloadProgress = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -117,15 +107,15 @@ const podcastSlice = createSlice({
         state.podcastDetails = action.payload;
 
         const podcastId = action.meta.arg;
-
+        // Comprobamos si los detalles del podcast están en la caché
         const cachedDetails = state.podcastDetailsCache[podcastId];
         const currentDate = new Date().toDateString();
 
-        let oneHourAgo = new Date();
-        oneHourAgo.setHours(oneHourAgo.getHours() - 1);
-        if (cachedDetails && new Date(cachedDetails.lastFetch) > oneHourAgo) {
+        if (cachedDetails && cachedDetails.lastFetchDate === currentDate) {
+          // Utilizamos los detalles almacenados en la caché
           state.podcastDetails = cachedDetails.details;
         } else {
+          // Almacenamos los nuevos detalles en la caché
           state.podcastDetailsCache[podcastId] = {
             lastFetchDate: currentDate,
             details: action.payload,
@@ -142,6 +132,6 @@ const podcastSlice = createSlice({
   },
 });
 
-export const { updateFilter, updateDownloadProgress } = podcastSlice.actions;
+export const { updateFilter } = podcastSlice.actions;
 
 export default podcastSlice.reducer;

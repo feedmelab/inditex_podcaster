@@ -43,13 +43,13 @@ const Header = () => {
             <Link to='/' alt='Incio'>
               Podcaster
             </Link>
-            {(status === "loading" || isFetchingDetails) && (
+            {/* {(status === "loading" || isFetchingDetails) && (
               <div className='progress-bar-container'>
                 <span data-testid='loader' className='progress-bar'>
                   {renderProgressBar()}
                 </span>
               </div>
-            )}
+            )} */}
             {(status === "loading" || isFetchingDetails) && (
               <span data-testid='loader'>
                 <i className='gg-spinner'></i>
