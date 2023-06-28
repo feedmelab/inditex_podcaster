@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { StyleSheetManager } from "styled-components";
 import Header from "./components/Header/Header";
 import PodcastList from "./components/PodcastList/PodcastList";
 import PodcastDetail from "./components/PodcastDetail/PodcastDetail";
 import EpisodeDetail from "./components/EpisodeDetail/EpisodeDetail";
 import "./App.css";
-import { StyleSheetManager } from "styled-components";
 
 function App() {
   return (
