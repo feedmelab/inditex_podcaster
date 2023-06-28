@@ -71,7 +71,7 @@ const EpisodeDetail = () => {
           ></p>
 
           <div className='audio-player'>
-            <audio controls autoPlay>
+            <audio controls>
               <source
                 src={podcastDetails[0] && podcastDetails[0]?.episodeUrl}
                 type='audio/mpeg'
