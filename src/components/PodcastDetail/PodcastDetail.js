@@ -11,19 +11,14 @@ import {
   WrapperColumn,
   WrapperDetails,
 } from "./PodcastDetail.styles";
-import {
-  PodcastContainer,
-  ProgressBar,
-} from "../PodcastList/PodcastList.styles";
+import { PodcastContainer } from "../PodcastList/PodcastList.styles";
 
 const PodcastDetail = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { summary } = location.state ?? {};
   const { podcastId } = useParams();
-  const downloadProgress = useSelector(
-    (state) => state.podcast.downloadProgress
-  );
+
   const { podcastDetails, isFetchingDetails } = useSelector(
     (state) =>
       state.podcast ?? {
