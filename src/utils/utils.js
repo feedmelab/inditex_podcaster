@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
 import { updateDownloadProgress } from "../features/podcast/podcastSlice";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -25,10 +24,6 @@ export const fetchPodcastDetails = createAsyncThunk(
         {
           responseType: "json",
           onDownloadProgress: (progressEvent) => {
-            // console.log(
-            //   "Fetch Podcast Details PROGRESS EVENT: ",
-            //   progressEvent
-            // );
             const percentCompleted = Math.round(
               (progressEvent.loaded / 20000) * 100
             );

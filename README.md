@@ -4,6 +4,7 @@ In the project directory, you can run:
 
 ### `Start`
 
+required node -> v20.3.1
 git clone https://github.com/feedmelab/inditex_podcaster.git \
 cd inditex_podcaster
 
