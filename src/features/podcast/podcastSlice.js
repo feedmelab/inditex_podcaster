@@ -1,89 +1,11 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 import { loadAxiosProgress } from "axios-progress";
+import { fetchPodcastDetails, fetchPodcasts } from "../../utils/utils";
 
 loadAxiosProgress(axios);
 
-export const fetchPodcasts = createAsyncThunk(
-  "podcast/fetchPodcasts",
-  async (_, { rejectWithValue, dispatch }) => {
-    try {
-      const response = await axios.get(
-        `https://api.allorigins.win/get?url=${encodeURIComponent(
-          "https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json"
-        )}`,
-        {
-          responseType: "json",
-          onDownloadProgress: (progressEvent) => {
-            const percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total
-            );
-            dispatch(updateDownloadProgress(percentCompleted));
-          },
-        }
-      );
-
-      console.log(JSON.parse(response.data.contents));
-
-      if (!response.data) {
-        throw new Error("Server response was not as expected.");
-      }
-
-      const parsedData = JSON.parse(response.data.contents);
-      console.log(parsedData);
-      const podcasts = parsedData.feed.entry.map((entry) => ({
-        id: entry.id.attributes["im:id"],
-        summary: entry.summary?.label || "",
-        "im:name": { label: entry["im:name"].label },
-        "im:artist": { label: entry["im:artist"].label },
-        "im:image": entry["im:image"].map((image) => ({
-          label: image.label,
-          attributes: { height: image.attributes.height },
-        })),
-      }));
-
-      return podcasts;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-export const fetchPodcastDetails = createAsyncThunk(
-  "podcast/fetchPodcastDetails",
-  async (podcastId, { rejectWithValue, dispatch }) => {
-    try {
-      const response = await axios.get(
-        `https://api.allorigins.win/get?url=${encodeURIComponent(
-          `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=20`
-        )}`,
-        {
-          responseType: "json",
-          onDownloadProgress: (progressEvent) => {
-            console.log(
-              "Fetch Podcast Details PROGRESS EVENT: ",
-              progressEvent
-            );
-            const percentCompleted = Math.round(
-              (progressEvent.loaded / 20000) * 100
-            );
-            dispatch(updateDownloadProgress(percentCompleted));
-          },
-        }
-      );
-
-      if (!response.data || !response.data.contents) {
-        throw new Error("Server response was not as expected.");
-      }
-
-      const parsedData = await JSON.parse(response.data.contents);
-      dispatch(updateDownloadProgress(0));
-      return parsedData.results;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
 const applyFilter = (podcasts, filterValue) => {
   const normalizedFilter = filterValue.toLowerCase();
   return podcasts.filter((podcast) => {

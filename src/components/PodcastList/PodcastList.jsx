@@ -1,13 +1,12 @@
 import React, { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPodcasts } from "../../features/podcast/podcastSlice";
+import { fetchPodcasts } from "../../utils/utils";
 import {
   Avatar,
   PodcastContainer,
   PodcastData,
   PodcastItem,
-  ProgressBar,
 } from "./PodcastList.styles";
 
 const PodcastList = () => {

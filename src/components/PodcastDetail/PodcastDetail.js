@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { fetchPodcastDetails } from "../../features/podcast/podcastSlice";
+//import { fetchPodcastDetails } from "../../features/podcast/podcastSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
-
+import { fetchPodcastDetails } from "../../utils/utils";
 import {
   BarraEpisodios,
   BarraLateral,
