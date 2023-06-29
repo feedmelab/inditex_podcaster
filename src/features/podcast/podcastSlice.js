@@ -2,18 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 import { loadAxiosProgress } from "axios-progress";
-import { fetchPodcastDetails, fetchPodcasts } from "../../utils/utils";
+import {
+  fetchPodcastDetails,
+  fetchPodcasts,
+  applyFilter,
+} from "../../utils/utils";
 
 loadAxiosProgress(axios);
-
-const applyFilter = (podcasts, filterValue) => {
-  const normalizedFilter = filterValue.toLowerCase();
-  return podcasts.filter((podcast) => {
-    const name = podcast["im:name"].label.toLowerCase();
-    const artist = podcast["im:artist"].label.toLowerCase();
-    return name.includes(normalizedFilter) || artist.includes(normalizedFilter);
-  });
-};
 
 const podcastSlice = createSlice({
   name: "podcast",

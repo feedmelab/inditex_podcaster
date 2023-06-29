@@ -13,6 +13,15 @@ export const formatDescription = (description) => {
   });
 };
 
+export const applyFilter = (podcasts, filterValue) => {
+  const normalizedFilter = filterValue.toLowerCase();
+  return podcasts.filter((podcast) => {
+    const name = podcast["im:name"].label.toLowerCase();
+    const artist = podcast["im:artist"].label.toLowerCase();
+    return name.includes(normalizedFilter) || artist.includes(normalizedFilter);
+  });
+};
+
 export const fetchPodcastDetails = createAsyncThunk(
   "podcast/fetchPodcastDetails",
   async (podcastId, { rejectWithValue, dispatch }) => {
