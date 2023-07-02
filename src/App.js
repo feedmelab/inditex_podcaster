@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import Header from "./components/Header/Header";
 import PodcastList from "./components/PodcastList/PodcastList";
 import PodcastDetail from "./components/PodcastDetail/PodcastDetail";
@@ -14,17 +14,24 @@ function App() {
   return (
     <StyleSheetManager shouldForwardProp={(prop) => prop !== "theme"}>
       <Provider store={store}>
-        <SCApp className='container'>
-          <Header />
-          <Routes>
-            <Route exact path='/' element={<PodcastList />} />
-            <Route path='/podcast/:podcastId' element={<PodcastDetail />} />
-            <Route
-              path='/podcast/:podcastId/episode/:episodeId'
-              element={<EpisodeDetail />}
-            />
-          </Routes>
-        </SCApp>{" "}
+        <Router>
+          <SCApp className='container'>
+            <Header />
+            <Routes>
+              <Route exact path='/' element={<PodcastList />} />
+              <Route
+                exact
+                path='/podcast/:podcastId'
+                element={<PodcastDetail />}
+              />
+              <Route
+                exact
+                path='/podcast/:podcastId/episode/:episodeId'
+                element={<EpisodeDetail />}
+              />
+            </Routes>
+          </SCApp>
+        </Router>
       </Provider>
     </StyleSheetManager>
   );

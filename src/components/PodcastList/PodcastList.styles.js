@@ -3,12 +3,16 @@ import styled, { keyframes } from "styled-components";
 export const bounce = keyframes`
    0% {
     transform: translateY(0);
+    box-shadow: 0 5px 5px rgba(0,0,0,0.02), 0 1px 1px rgba(0,0,0,0.23);
   }
   50% {
     transform: translateY(-5px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.19), 0 4px 4px rgba(0,0,0,0.23);
+    
   }
   100% {
     transform: translateY(0);
+    
   }
 `;
 
@@ -68,7 +72,7 @@ export const Avatar = styled.div`
     overflow: hidden;
     object-position: center;
     object-fit: cover;
-    border: 1px solid white;
+    border: none;
     background-color: #888888;
     transition: transform 0.3s ease-in-out;
     ${PodcastItem}:hover & {
