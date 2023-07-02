@@ -23,6 +23,11 @@
     "styled-components": "^6.0.0-rc.6",
     "web-vitals": "^2.1.0"
   },
+  "jest": {
+    "moduleNameMapper": {
+      "^axios-progress$": "<rootDir>/__mocks__/axios-progress.js"
+    }
+  },
   "resolutions": {
     "styled-components": "^5"
   },
