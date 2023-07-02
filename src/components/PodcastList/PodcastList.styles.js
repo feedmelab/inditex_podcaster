@@ -74,7 +74,7 @@ export const Avatar = styled.div`
     object-fit: cover;
     border: none;
     background-color: #888888;
-    transition: transform 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     ${PodcastItem}:hover & {
       animation: ${bounce} 1s infinite;
     }

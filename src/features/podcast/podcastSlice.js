@@ -69,7 +69,7 @@ const podcastSlice = createSlice({
             podcastDetails: action.payload.podcastDetails,
           };
           state.summary = action.payload.summary;
-          // state.podcastDetails = action.payload.podcastDetails;
+          state.podcastDetails = action.payload.podcastDetails;
         }
       })
       .addCase(fetchPodcastDetails.rejected, (state) => {
