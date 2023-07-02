@@ -81,7 +81,7 @@ const PodcastList = () => {
           <p>
             {status !== "loading"
               ? "No se han encontrado podcast."
-              : "Cargndo podcasts, por favor espere..."}
+              : "Cargando podcasts, por favor espere..."}
           </p>
         )}
       </PodcastContainer>
