@@ -1,11 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-import {
-  applyFilter,
-  fetchPodcastDetails,
-  fetchPodcasts,
-} from "../../utils/utils";
-
+import { applyFilter } from "../../utils/utils";
+import { fetchPodcasts, fetchPodcastDetails } from "../../actions/fetchActions";
 
 const podcastSlice = createSlice({
   name: "podcast",
