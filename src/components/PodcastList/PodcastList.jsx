@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { useSelector, useDispatch } from "react-redux";
 import { fetchPodcasts } from "../../actions/fetchActions";
 import {
   Avatar,
@@ -79,11 +78,7 @@ const PodcastList = () => {
             </PodcastItem>
           ))
         ) : (
-          <p>
-            {status !== "loading"
-              ? "No se han encontrado podcast."
-              : "Cargando podcasts, por favor espere..."}
-          </p>
+          <p>{status !== "loading" && "No se han encontrado podcast."} </p>
         )}
       </PodcastContainer>
     </div>

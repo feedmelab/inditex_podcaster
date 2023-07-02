@@ -58,21 +58,32 @@ const podcastSlice = createSlice({
         const podcastId = action.meta.arg;
         // Comprobamos si los detalles del podcast están en la caché
         const cachedDetails = state.podcastDetailsCache[podcastId];
-        const currentDate = new Date().toDateString();
+        //const currentDate = new Date().toDateString();
 
-        if (cachedDetails && cachedDetails.lastFetchDate === currentDate) {
-          // Utilizamos los detalles almacenados en la caché
+        // Convert the lastFetchDate to a Date object
+        const lastFetchedDate = new Date(cachedDetails?.lastFetchDate);
+
+        // Get the current date
+        const currentDate = new Date();
+
+        // Calculate the difference in hours
+        const diffInHours = Math.abs(currentDate - lastFetchedDate) / 36e5;
+
+        // Update podcastDetails immediately with the new payload
+        state.podcastDetails = action.payload;
+
+        if (cachedDetails && diffInHours < 1) {
+          // If the details are cached and they are less than one hour old, use the cached details
           state.podcastDetails = cachedDetails.details;
         } else {
-          // Almacenamos los nuevos detalles en la caché
+          // If the details are not cached or they are more than one hour old, fetch new details and update the cache
           state.podcastDetailsCache[podcastId] = {
-            lastFetchDate: currentDate,
+            lastFetchDate: currentDate.toISOString(),
             details: action.payload,
             summary: action.payload.summary,
             podcastDetails: action.payload.podcastDetails,
           };
           state.summary = action.payload.summary;
-          state.podcastDetails = action.payload.podcastDetails;
         }
       })
       .addCase(fetchPodcastDetails.rejected, (state) => {
