@@ -1,4 +1,16 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+export const bounce = keyframes`
+   0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+`;
 
 export const ProgressBar = styled.span`
   .progress-bar-container {
@@ -22,6 +34,7 @@ export const PodcastContainer = styled.ul`
   text-align: center;
   margin-top: 4rem;
 `;
+
 export const PodcastItem = styled.li`
   display: flex;
   justify-content: flex-start;
@@ -32,6 +45,7 @@ export const PodcastItem = styled.li`
   margin-bottom: 3rem;
   padding: 1rem;
   cursor: pointer;
+
   h2 {
     font-size: 1.05rem;
     color: #353535;
@@ -56,8 +70,13 @@ export const Avatar = styled.div`
     object-fit: cover;
     border: 1px solid white;
     background-color: #888888;
+    transition: transform 0.3s ease-in-out;
+    ${PodcastItem}:hover & {
+      animation: ${bounce} 1s infinite;
+    }
   }
 `;
+
 export const PodcastData = styled.div`
   display: flex;
   width: 10rem;

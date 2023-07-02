@@ -13,8 +13,8 @@ import { StyleSheetManager } from "styled-components";
 function App() {
   return (
     <StyleSheetManager shouldForwardProp={(prop) => prop !== "theme"}>
-      <SCApp className='container '>
-        <Provider store={store}>
+      <Provider store={store}>
+        <SCApp className='container'>
           <Header />
           <Routes>
             <Route exact path='/' element={<PodcastList />} />
@@ -24,8 +24,8 @@ function App() {
               element={<EpisodeDetail />}
             />
           </Routes>
-        </Provider>
-      </SCApp>
+        </SCApp>{" "}
+      </Provider>
     </StyleSheetManager>
   );
 }
