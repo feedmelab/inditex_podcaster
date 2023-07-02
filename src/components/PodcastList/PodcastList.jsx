@@ -78,7 +78,7 @@ const PodcastList = () => {
             </PodcastItem>
           ))
         ) : (
-          <p>Descargando podcasts, por favor espere...</p>
+          <p>No se han encontrado podcast.</p>
         )}
       </PodcastContainer>
     </div>
