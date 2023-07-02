@@ -1,14 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 
-import { loadAxiosProgress } from "axios-progress";
 import {
+  applyFilter,
   fetchPodcastDetails,
   fetchPodcasts,
-  applyFilter,
 } from "../../utils/utils";
 
-loadAxiosProgress(axios);
 
 const podcastSlice = createSlice({
   name: "podcast",
@@ -29,9 +26,6 @@ const podcastSlice = createSlice({
     updateFilter: (state, action) => {
       state.filter = action.payload;
       state.filteredPodcasts = applyFilter(state.podcasts, state.filter);
-    },
-    updateDownloadProgress: (state, action) => {
-      state.downloadProgress = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -80,7 +74,7 @@ const podcastSlice = createSlice({
             podcastDetails: action.payload.podcastDetails,
           };
           state.summary = action.payload.summary;
-          state.podcastDetails = action.payload.podcastDetails;
+          // state.podcastDetails = action.payload.podcastDetails;
         }
       })
       .addCase(fetchPodcastDetails.rejected, (state) => {
@@ -89,6 +83,6 @@ const podcastSlice = createSlice({
   },
 });
 
-export const { updateFilter, updateDownloadProgress } = podcastSlice.actions;
+export const { updateFilter } = podcastSlice.actions;
 
 export default podcastSlice.reducer;

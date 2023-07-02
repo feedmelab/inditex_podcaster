@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPodcasts } from "../../utils/utils";
+
 import {
   Avatar,
   PodcastContainer,
@@ -41,12 +42,12 @@ const PodcastList = () => {
   );
 
   if (error) {
-    console.error(`Error loading podcasts: ${error}. Please try again later.`);
+    console.error(`Error loading podcasts: ${error}`);
     return <div>Error loading podcasts: {error}. Please try again later.</div>;
   }
 
   return (
-    <div data-testid='podcast-item'>
+    <div>
       <PodcastContainer>
         {filteredPodcasts?.length ? (
           filteredPodcasts.map((podcast, index) => (

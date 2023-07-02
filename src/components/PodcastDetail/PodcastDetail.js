@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-//import { fetchPodcastDetails } from "../../features/podcast/podcastSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import moment from "moment";
 import { fetchPodcastDetails } from "../../utils/utils";
+import moment from "moment";
+
 import {
   BarraEpisodios,
   BarraLateral,
@@ -14,6 +14,7 @@ import {
 import { PodcastContainer } from "../PodcastList/PodcastList.styles";
 
 const PodcastDetail = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const { summary } = location.state ?? {};
@@ -28,7 +29,6 @@ const PodcastDetail = () => {
       }
   );
 
-  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchPodcastDetails(podcastId));
   }, [dispatch, podcastId]);
