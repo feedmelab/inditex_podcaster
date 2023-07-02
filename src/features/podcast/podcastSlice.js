@@ -15,7 +15,6 @@ const podcastSlice = createSlice({
     podcastDetails: null,
     podcastDetailsCache: {},
     summary: null,
-    downloadProgress: 0,
   },
   reducers: {
     updateFilter: (state, action) => {
@@ -27,10 +26,11 @@ const podcastSlice = createSlice({
     builder
       .addCase(fetchPodcasts.pending, (state) => {
         state.status = "loading";
+        state.podcastDetails = null;
       })
       .addCase(fetchPodcasts.fulfilled, (state, action) => {
         let oneHourAgo = Date.now() - 60 * 60 * 1000;
-
+        state.podcastDetails = null;
         if (state.lastFetch > oneHourAgo) {
           state.filteredPodcasts = applyFilter(state.podcasts, state.filter);
         } else {
@@ -39,14 +39,17 @@ const podcastSlice = createSlice({
           state.lastFetch = Date.now();
           state.filteredPodcasts = applyFilter(action.payload, state.filter);
         }
+
         state.status = "succeeded";
       })
       .addCase(fetchPodcasts.rejected, (state, action) => {
         state.status = "failed";
+        state.podcastDetails = null;
         state.error = action.error.message;
       })
       .addCase(fetchPodcastDetails.pending, (state) => {
         state.isFetchingDetails = true;
+        state.podcastDetails = null;
       })
       .addCase(fetchPodcastDetails.fulfilled, (state, action) => {
         state.isFetchingDetails = false;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { formatDescription } from "../../utils/utils";
-import { useSelector } from "react-redux";
+
 import {
   BarraLateral,
   ListEpisodio,
@@ -15,9 +15,8 @@ const EpisodeDetail = () => {
     summary: null,
     podcastDetails: null,
   };
-  const { isFetchingDetails } = useSelector((state) => state.podcast);
   const navigate = useNavigate();
-  if (!podcastDetails || isFetchingDetails) {
+  if (!podcastDetails) {
     return <div>Loading...</div>;
   }
 
