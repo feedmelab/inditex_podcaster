@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
+import { fetchPodcastDetails } from "../../actions/fetchActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { fetchPodcastDetails } from "../../actions/fetchActions";
 import moment from "moment";
 
 import {
@@ -14,7 +14,6 @@ import {
 import { PodcastContainer } from "../PodcastList/PodcastList.styles";
 
 const PodcastDetail = () => {
-  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const { summary } = location.state ?? {};
@@ -29,6 +28,7 @@ const PodcastDetail = () => {
       }
   );
 
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchPodcastDetails(podcastId));
   }, [dispatch, podcastId]);
