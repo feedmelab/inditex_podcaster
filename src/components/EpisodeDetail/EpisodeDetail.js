@@ -54,7 +54,7 @@ const EpisodeDetail = () => {
         <hr />
         <h4>Description:</h4>
         <div>
-          <p>{summary}</p>
+          <p dangerouslySetInnerHTML={{ __html: formatDescription(summary) }} />
         </div>
       </BarraLateral>
       <WrapperColumn>

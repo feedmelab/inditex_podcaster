@@ -3,7 +3,7 @@ import { fetchPodcastDetails } from "../../actions/fetchActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
-
+import { formatDescription } from "../../utils/utils";
 import {
   BarraEpisodios,
   BarraLateral,
@@ -95,7 +95,7 @@ const PodcastDetail = () => {
         <hr />
         <h4>Description:</h4>
         <div>
-          <p>{summary}</p>
+          <p dangerouslySetInnerHTML={{ __html: formatDescription(summary) }} />
         </div>
       </BarraLateral>
       <WrapperColumn>
