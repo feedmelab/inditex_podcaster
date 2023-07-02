@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import { fetchPodcasts } from "../../actions/fetchActions";
 import {
   Avatar,
