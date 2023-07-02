@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateFilter } from "../../features/podcast/podcastSlice";
 import { Link, useLocation } from "react-router-dom";
 
-import { CHeader, CNavArea, SearchArea } from "./Header.styles";
+import { CHeader, CNavArea, ClearButton, SearchArea } from "./Header.styles";
 
 const Header = () => {
   const location = useLocation();
@@ -24,7 +24,10 @@ const Header = () => {
     setFilter(e.target.value);
     dispatch(updateFilter(e.target.value));
   };
-
+  const handleClearClick = () => {
+    setFilter("");
+    dispatch(updateFilter(""));
+  };
   return (
     <section>
       <CHeader>
@@ -50,6 +53,9 @@ const Header = () => {
                 value={filter}
                 onChange={handleInputChange}
               />
+              {filter && (
+                <ClearButton onClick={handleClearClick}>CLEAR</ClearButton>
+              )}
             </SearchArea>
           )}
         </nav>

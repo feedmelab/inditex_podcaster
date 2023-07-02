@@ -39,3 +39,12 @@ export const SearchArea = styled.div`
     outline: none;
   }
 `;
+export const ClearButton = styled.button`
+  border: 0;
+  background-color: var(--primary-color);
+  color: white;
+  margin-left: 0.3rem;
+  border-radius: var(--radius-size);
+  font-size: 0.6rem;
+  height: 70%;
+`;
