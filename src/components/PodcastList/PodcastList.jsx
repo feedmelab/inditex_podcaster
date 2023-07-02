@@ -78,7 +78,7 @@ const PodcastList = () => {
             </PodcastItem>
           ))
         ) : (
-          <p>No se han encontrado podcast.</p>
+          <p>{status !== "loading" && "No se han encontrado podcast."} </p>
         )}
       </PodcastContainer>
     </div>

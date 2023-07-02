@@ -22,9 +22,6 @@ const podcastSlice = createSlice({
       state.filter = action.payload;
       state.filteredPodcasts = applyFilter(state.podcasts, state.filter);
     },
-    updateDownloadProgress: (state, action) => {
-      state.downloadProgress = action.payload;
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -81,6 +78,6 @@ const podcastSlice = createSlice({
   },
 });
 
-export const { updateFilter, updateDownloadProgress } = podcastSlice.actions;
+export const { updateFilter } = podcastSlice.actions;
 
 export default podcastSlice.reducer;
