@@ -1,9 +1,14 @@
 ## Demo
 <h1>API STATUS:</h1>
-<p align="left">
-  <img src="status.png" width="300px" alt="nombre alternativo"/>
-</p>
-
+```javascript
+fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://wikipedia.org')}`).then(response => {
+    if (response.ok) {return response.json()}
+    else { return `<p align="left">
+                    <img src="status.png" width="300px" alt="nombre alternativo"/>
+                  </p>`
+    throw new Error('Network response was not ok.')
+  }).then(data => console.log(data.contents));
+```
 visit \
 https://podcaster-omega.vercel.app/ \
 
