@@ -1,6 +1,6 @@
 ## Demo
-<p align="center">
-  <img src="status.png" width="100px" alt="nombre alternativo"/>
+<p align="left">
+  <img src="status.png" width="300px" alt="nombre alternativo"/>
 </p>
 
 visit \
