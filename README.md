@@ -1,17 +1,7 @@
 ## Demo
 <h1>API STATUS:</h1>
 
-```javascript
-const checkStatus = () => {
-  fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://wikipedia.org')}`)
-  .then(response => {
-                      if (response.ok) return response.json()
-                      throw new Error('Network response was not ok.')
-                    })
-                    .then(data => console.log(data.contents));
-}
-checkStatus();
-```
+<p align="left"><img src="status.png" width="300px" alt="Api Status" /></p>
 
 visit \
 https://podcaster-omega.vercel.app/ \
