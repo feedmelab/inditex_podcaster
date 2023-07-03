@@ -1,7 +1,8 @@
 ## Demo
+![ESTADO DE LA API](status.png) \
 
-visit
-https://podcaster-omega.vercel.app/
+visit \
+https://podcaster-omega.vercel.app/ \
 
 ## Available Scripts
 
