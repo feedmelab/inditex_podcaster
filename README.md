@@ -1,5 +1,7 @@
 ## Demo
-![ESTADO DE LA API](status.png) \
+<p align="center">
+  <img src="status.png" width="100px" alt="nombre alternativo"/>
+</p>
 
 visit \
 https://podcaster-omega.vercel.app/ \
