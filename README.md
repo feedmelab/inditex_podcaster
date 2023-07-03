@@ -2,7 +2,15 @@
 <h1>API STATUS:</h1>
 
 ```javascript
-console.log("hola")
+const checkStatus = () => {
+  fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://wikipedia.org')}`)
+  .then(response => {
+                      if (response.ok) return response.json()
+                      throw new Error('Network response was not ok.')
+                    })
+                    .then(data => console.log(data.contents));
+}
+checkStatus();
 ```
 
 visit \
