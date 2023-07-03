@@ -7,7 +7,7 @@ import { createGlobalStyle } from "styled-components";
 //   };
 // }
 
-export const GlobalStyle = createGlobalStyle.bind(null)`
+export const GlobalStyle = createGlobalStyle`
     
     p {
         font-family: "Roboto", sans-serif;

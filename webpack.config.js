@@ -18,10 +18,6 @@ module.exports = {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
       },
-      {
-        test: /\.png$/,
-        use: "url-loader?limit=100000",
-      },
     ],
   },
   plugins: [
@@ -33,7 +29,6 @@ module.exports = {
   resolve: {
     extensions: ["*", ".js", ".jsx"],
   },
-
   devServer: {
     historyApiFallback: true,
     static: {

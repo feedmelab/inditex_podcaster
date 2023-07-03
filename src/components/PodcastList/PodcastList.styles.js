@@ -13,7 +13,6 @@ export const bounce = keyframes`
     transform: translateY(0);
   }
 `;
-
 export const ProgressBar = styled.span`
   .progress-bar-container {
     height: 20px;
@@ -35,7 +34,6 @@ export const PodcastContainer = styled.ul`
   text-align: center;
   margin-top: 4rem;
 `;
-
 export const PodcastItem = styled.li`
   display: flex;
   justify-content: flex-start;
@@ -46,7 +44,6 @@ export const PodcastItem = styled.li`
   margin-bottom: 3rem;
   padding: 1rem;
   cursor: pointer;
-
   h2 {
     font-size: 1.05rem;
     color: #353535;
@@ -77,7 +74,6 @@ export const Avatar = styled.div`
     }
   }
 `;
-
 export const PodcastData = styled.div`
   display: flex;
   width: 10rem;
