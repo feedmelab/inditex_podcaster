@@ -12,7 +12,6 @@ export const BarraLateral = styled.div`
   width: 12rem;
   display: flex;
   justify-content: flex-start;
-
   padding-top: 2rem !important;
   align-items: center;
   img {

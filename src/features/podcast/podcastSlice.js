@@ -22,6 +22,11 @@ const podcastSlice = createSlice({
       state.filter = action.payload;
       state.filteredPodcasts = applyFilter(state.podcasts, state.filter);
     },
+    addPodcasts: (state, action) => {
+      // Fusionar los podcasts existentes con los nuevos podcasts
+      state.podcasts = [...state.podcasts, ...action.payload];
+      state.filteredPodcasts = applyFilter(state.podcasts, state.filter);
+    },
   },
   extraReducers: (builder) => {
     builder

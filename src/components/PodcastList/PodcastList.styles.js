@@ -8,18 +8,15 @@ export const bounce = keyframes`
   50% {
     transform: translateY(-5px);
     box-shadow: 0 5px 10px rgba(0,0,0,0.19), 0 4px 4px rgba(0,0,0,0.23);
-    
   }
   100% {
     transform: translateY(0);
-    
   }
 `;
 
 export const ProgressBar = styled.span`
   .progress-bar-container {
     height: 20px;
-
     border-radius: 10px;
     overflow: hidden;
   }
