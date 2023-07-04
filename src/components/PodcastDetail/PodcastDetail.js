@@ -7,6 +7,7 @@ import moment from "moment";
 import {
   BarraEpisodios,
   BarraLateral,
+  DescriptionParagraf,
   ListEpisodios,
   WrapperColumn,
   WrapperDetails,
@@ -94,9 +95,9 @@ const PodcastDetail = () => {
         <h3>by {podcastDetails[0]?.artistName}</h3>
         <hr />
         <h4>Description:</h4>
-        <div>
+        <DescriptionParagraf>
           <p>{summary}</p>
-        </div>
+        </DescriptionParagraf>
       </BarraLateral>
       <WrapperColumn>
         <BarraEpisodios className='card'>

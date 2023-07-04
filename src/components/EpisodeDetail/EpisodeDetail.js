@@ -4,6 +4,7 @@ import { formatDescription } from "../../utils/utils";
 
 import {
   BarraLateral,
+  DescriptionParagraf,
   ListEpisodio,
   WrapperColumn,
   WrapperDetails,
@@ -53,9 +54,9 @@ const EpisodeDetail = () => {
         <h3>by {podcastDetails[0] && artistName}</h3>
         <hr />
         <h4>Description:</h4>
-        <div>
+        <DescriptionParagraf>
           <p dangerouslySetInnerHTML={{ __html: formatDescription(summary) }} />
-        </div>
+        </DescriptionParagraf>
       </BarraLateral>
       <WrapperColumn>
         <ListEpisodio className='card'>
