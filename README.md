@@ -3,6 +3,9 @@
 <p>Due to proxy CORS server failure i made a little temporary changes</p>
 <p>visit this page to requests temporary acces to the new proxy CORS</p>
 <a href="https://cors-anywhere.herokuapp.com/corsdemo">cors-anywhere.herokuapp.com</a>
+<h1>API STATUS:</h1>
+
+<p align="left"><img src="status.png" width="300px" alt="Api Status" /></p>
 
 visit \
 https://podcaster-omega.vercel.app/ \
