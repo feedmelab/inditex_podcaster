@@ -13,6 +13,36 @@ export const bounce = keyframes`
     transform: translateY(0);
   }
 `;
+export const Paginator = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+
+  button {
+    margin: 0 5px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #f0f0f0;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #c0c0c0;
+  }
+
+  button.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  button.arrow {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+  }
+`;
 export const ProgressBar = styled.span`
   .progress-bar-container {
     height: 20px;

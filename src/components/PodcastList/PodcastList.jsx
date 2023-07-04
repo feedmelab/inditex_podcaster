@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPodcasts } from "../../actions/fetchActions";
@@ -8,11 +8,14 @@ import {
   PodcastContainer,
   PodcastData,
   PodcastItem,
+  Paginator,
 } from "./PodcastList.styles";
 
 const PodcastList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 25;
 
   const { podcasts, status, filter, error } = useSelector(
     (state) => state.podcast
@@ -41,6 +44,40 @@ const PodcastList = () => {
     [podcasts, filter]
   );
 
+  // Calculate the total number of pages
+  const pages = Math.ceil(filteredPodcasts.length / itemsPerPage);
+
+  // Slice the array of podcasts to get only the ones for the current page
+  const displayedPodcasts = filteredPodcasts.slice(
+    currentPage * itemsPerPage,
+    currentPage * itemsPerPage + itemsPerPage
+  );
+
+  const pageButtons = [];
+  for (let i = 0; i < pages; i++) {
+    pageButtons.push(
+      <button
+        key={i}
+        onClick={() => setCurrentPage(i)}
+        className={currentPage === i ? "active" : ""}
+      >
+        {i + 1}
+      </button>
+    );
+  }
+
+  const goBack = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goForward = () => {
+    if (currentPage < pages - 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   if (error) {
     console.error(`Error loading podcasts: ${error}. Please try again later.`);
     return <div>Error loading podcasts: {error}. Please try again later.</div>;
@@ -48,9 +85,22 @@ const PodcastList = () => {
 
   return (
     <div data-testid='podcast-item'>
+      <Paginator>
+        <button onClick={goBack} className='arrow' disabled={currentPage === 0}>
+          &lt;
+        </button>
+        {pageButtons}
+        <button
+          onClick={goForward}
+          className='arrow'
+          disabled={currentPage === pages - 1}
+        >
+          &gt;
+        </button>
+      </Paginator>
       <PodcastContainer>
-        {filteredPodcasts?.length ? (
-          filteredPodcasts.map((podcast, index) => (
+        {displayedPodcasts?.length ? (
+          displayedPodcasts.map((podcast, index) => (
             <PodcastItem
               key={index}
               data-testid='podcast-item'
@@ -85,6 +135,7 @@ const PodcastList = () => {
     </div>
   );
 };
+
 PodcastList.propTypes = {
   status: PropTypes.string,
   podcast: PropTypes.array,
