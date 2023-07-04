@@ -5,11 +5,12 @@ import { loadAxiosProgress } from "axios-progress";
 loadAxiosProgress(axios);
 
 const callAxios = async (url) => {
-  const response = await fetch(url);
-  if (!response.ok) {
+  const response = await axios.get(url);
+  console.log(response.data, response.status);
+  if (response.status !== 200) {
     throw new Error("Server response was not as expected.");
   }
-  return response.json();
+  return response.data;
 };
 
 export const fetchPodcastDetails = createAsyncThunk(
@@ -31,6 +32,7 @@ export const fetchPodcasts = createAsyncThunk(
     try {
       const url = `https://cors-anywhere.herokuapp.com/https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json`;
       const parsedData = await callAxios(url);
+      await callAxios(url);
       const podcasts = parsedData.feed.entry.map((entry) => ({
         id: entry.id.attributes["im:id"],
         summary: entry.summary?.label || "",
