@@ -6,7 +6,6 @@ loadAxiosProgress(axios);
 
 const callAxios = async (url) => {
   const response = await axios.get(url);
-  console.log(response.data, response.status);
   if (response.status !== 200) {
     throw new Error("Server response was not as expected.");
   }
