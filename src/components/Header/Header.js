@@ -70,7 +70,26 @@ Header.propTypes = {
   showInput: PropTypes.bool,
   podcast: PropTypes.array,
   filter: PropTypes.string,
-  filteredPodcasts: PropTypes.array,
+  filteredPodcasts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      summary: PropTypes.string,
+      "im:name": PropTypes.shape({
+        label: PropTypes.string.isRequired,
+      }),
+      "im:artist": PropTypes.shape({
+        label: PropTypes.string.isRequired,
+      }),
+      "im:image": PropTypes.arrayOf(
+        PropTypes.shape({
+          label: PropTypes.string.isRequired,
+          attributes: PropTypes.shape({
+            height: PropTypes.string.isRequired,
+          }),
+        })
+      ).isRequired,
+    })
+  ),
   inputSearch: PropTypes.string,
 };
 export default Header;
