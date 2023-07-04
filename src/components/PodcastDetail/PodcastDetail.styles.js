@@ -13,10 +13,6 @@ export const BarraLateral = styled.div`
   display: flex;
   justify-content: flex-start;
   padding-top: 2rem !important;
-<<<<<<< HEAD
-=======
-
->>>>>>> 8065163dc20455eb321320a6203e02870832ac13
   align-items: center;
   img {
     width: 50%;
@@ -46,7 +42,7 @@ export const BarraLateral = styled.div`
 
   div p {
     display: flex;
-    width: 10rem;
+    padding: 1rem;
     height: auto;
     flex-direction: column;
     white-space: pre-line !important;
