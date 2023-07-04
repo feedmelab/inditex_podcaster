@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPodcasts } from "../../actions/fetchActions";
+import PropTypes from "prop-types";
 import {
   Avatar,
   PodcastContainer,
@@ -84,5 +85,30 @@ const PodcastList = () => {
     </div>
   );
 };
-
+PodcastList.propTypes = {
+  status: PropTypes.string,
+  podcast: PropTypes.array,
+  filter: PropTypes.string,
+  filteredPodcasts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      summary: PropTypes.string,
+      "im:name": PropTypes.shape({
+        label: PropTypes.string.isRequired,
+      }),
+      "im:artist": PropTypes.shape({
+        label: PropTypes.string.isRequired,
+      }),
+      "im:image": PropTypes.arrayOf(
+        PropTypes.shape({
+          label: PropTypes.string.isRequired,
+          attributes: PropTypes.shape({
+            height: PropTypes.string.isRequired,
+          }),
+        })
+      ).isRequired,
+    })
+  ),
+  inputSearch: PropTypes.string,
+};
 export default PodcastList;
