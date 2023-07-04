@@ -15,7 +15,7 @@ const PodcastList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 25;
+  const itemsPerPage = 18;
 
   const { podcasts, status, filter, error } = useSelector(
     (state) => state.podcast
