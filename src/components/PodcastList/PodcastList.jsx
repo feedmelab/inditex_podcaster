@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPodcasts } from "../../actions/fetchActions";
+
 import PropTypes from "prop-types";
 import {
   Avatar,
@@ -10,12 +11,15 @@ import {
   PodcastItem,
   Paginator,
 } from "./PodcastList.styles";
+import { setPage } from "../../features/podcast/podcastSlice";
 
 const PodcastList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 18;
+
+  const currentPage = useSelector((state) => state.podcast.page);
+  const setCurrentPage = (page) => dispatch(setPage(page));
 
   const { podcasts, status, filter, error } = useSelector(
     (state) => state.podcast
@@ -44,10 +48,8 @@ const PodcastList = () => {
     [podcasts, filter]
   );
 
-  // Calculate the total number of pages
   const pages = Math.ceil(filteredPodcasts.length / itemsPerPage);
 
-  // Slice the array of podcasts to get only the ones for the current page
   const displayedPodcasts = filteredPodcasts.slice(
     currentPage * itemsPerPage,
     currentPage * itemsPerPage + itemsPerPage

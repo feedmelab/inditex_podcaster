@@ -1,11 +1,15 @@
-import styled from "styled-components";
-
+import styled, { keyframes } from "styled-components";
+const fadeIn = keyframes`
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+`;
 export const WrapperDetails = styled.div`
   display: flex;
   flex-wrap: row wrap;
   justify-content: space-evenly;
   width: 100%;
   padding-bottom: 2rem;
+  animation: ${fadeIn} 200ms ease-in-out forwards;
 `;
 export const DescriptionParagraf = styled.div`
   display: flex;

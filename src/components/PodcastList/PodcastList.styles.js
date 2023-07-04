@@ -1,5 +1,10 @@
 import styled, { keyframes } from "styled-components";
 
+const fadeIn = keyframes`
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+`;
+
 export const bounce = keyframes`
    0% {
     transform: translateY(0);
@@ -73,6 +78,7 @@ export const PodcastContainer = styled.ul`
 export const PodcastItem = styled.li`
   display: flex;
   justify-content: flex-start;
+  opacity: 0;
   align-items: flex-start;
   margin: var(--min-spacer);
   width: auto;
@@ -80,6 +86,8 @@ export const PodcastItem = styled.li`
   margin-bottom: 3rem;
   padding: 1rem;
   cursor: pointer;
+  animation: ${fadeIn} 1s ease-in-out forwards;
+  animation-delay: ${(props) => props.index * 0.2}s;
   h2 {
     font-size: 1.05rem;
     color: #353535;

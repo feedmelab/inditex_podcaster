@@ -15,11 +15,15 @@ const podcastSlice = createSlice({
     podcastDetails: null,
     podcastDetailsCache: {},
     summary: null,
+    page: 1,
   },
   reducers: {
     updateFilter: (state, action) => {
       state.filter = action.payload;
       state.filteredPodcasts = applyFilter(state.podcasts, state.filter);
+    },
+    setPage: (state, action) => {
+      state.page = action.payload;
     },
     addPodcasts: (state, action) => {
       // Fusionar los podcasts existentes con los nuevos podcasts
@@ -91,6 +95,6 @@ const podcastSlice = createSlice({
   },
 });
 
-export const { updateFilter } = podcastSlice.actions;
+export const { updateFilter, setPage } = podcastSlice.actions;
 
 export default podcastSlice.reducer;
