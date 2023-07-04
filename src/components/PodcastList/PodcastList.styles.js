@@ -21,9 +21,10 @@ export const Paginator = styled.div`
 
   button {
     margin: 0 5px;
-    padding: 10px 20px;
+    padding: 10px;
     border: none;
     background-color: #f0f0f0;
+    border-radius: var(--radius-size);
     transition: background-color 0.2s ease;
     cursor: pointer;
   }
@@ -40,7 +41,12 @@ export const Paginator = styled.div`
   button.arrow {
     width: 30px;
     height: 30px;
-    border-radius: 15px;
+    line-height: 10px;
+    border-radius: 5px;
+  }
+  button.active {
+    background-color: #c0c0c0;
+    color: #ffffff;
   }
 `;
 export const ProgressBar = styled.span`
