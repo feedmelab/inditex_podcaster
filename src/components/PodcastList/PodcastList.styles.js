@@ -28,14 +28,14 @@ export const Paginator = styled.div`
     margin: 0 5px;
     padding: 10px;
     border: none;
-    background-color: #2470b530;
+    background-color: #2470b510;
     border-radius: var(--radius-size);
     transition: background-color 0.2s ease;
     cursor: pointer;
   }
 
   button:hover {
-    background-color: #2470b575;
+    background-color: #2470b595;
   }
 
   button.disabled {
@@ -48,9 +48,11 @@ export const Paginator = styled.div`
     height: 30px;
     line-height: 10px;
     border-radius: 5px;
+    color: white;
+    background-color: #2470b5;
   }
   button.active {
-    background-color: #2470b575;
+    background-color: #2470b595;
     color: #ffffff;
   }
 `;
