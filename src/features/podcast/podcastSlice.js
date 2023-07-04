@@ -15,7 +15,7 @@ const podcastSlice = createSlice({
     podcastDetails: null,
     podcastDetailsCache: {},
     summary: null,
-    page: 1,
+    page: 0,
   },
   reducers: {
     updateFilter: (state, action) => {
