@@ -87,19 +87,25 @@ const PodcastList = () => {
 
   return (
     <div data-testid='podcast-item'>
-      <Paginator>
-        <button onClick={goBack} className='arrow' disabled={currentPage === 0}>
-          &lt;
-        </button>
-        {pageButtons}
-        <button
-          onClick={goForward}
-          className='arrow'
-          disabled={currentPage === pages - 1}
-        >
-          &gt;
-        </button>
-      </Paginator>
+      {filteredPodcasts.length > 0 && (
+        <Paginator>
+          <button
+            onClick={goBack}
+            className='arrow'
+            disabled={currentPage === 0}
+          >
+            &lt;
+          </button>
+          {pageButtons}
+          <button
+            onClick={goForward}
+            className='arrow'
+            disabled={currentPage === pages - 1}
+          >
+            &gt;
+          </button>
+        </Paginator>
+      )}
       <PodcastContainer>
         {displayedPodcasts?.length ? (
           displayedPodcasts.map((podcast, index) => (
