@@ -5,11 +5,19 @@ import { loadAxiosProgress } from "axios-progress";
 loadAxiosProgress(axios);
 
 const callAxios = async (url) => {
-  const response = await axios.get(url);
-  if (response.status !== 200) {
-    throw new Error("Server response was not as expected.");
+  try {
+    const response = await axios.get(url);
+
+    if (response.status >= 200 && response.status < 300) {
+      return response.data;
+    } else {
+      throw new Error(`HTTP status code: ${response.status}`);
+    }
+  } catch (error) {
+    throw new Error(
+      `Failed to fetch data from ${url}. Reason: ${error.message}`
+    );
   }
-  return response.data;
 };
 
 export const fetchPodcastDetails = createAsyncThunk(

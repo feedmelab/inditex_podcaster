@@ -42,7 +42,7 @@ export const BarraLateral = styled.div`
 
   div p {
     display: flex;
-    width: 10rem;
+
     height: auto;
     flex-direction: column;
     white-space: pre-line !important;
