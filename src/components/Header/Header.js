@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import { updateFilter } from "../../features/podcast/podcastSlice";
+import { setPage, updateFilter } from "../../features/podcast/podcastSlice";
 import { Link, useLocation } from "react-router-dom";
 
 import { CHeader, CNavArea, ClearButton, SearchArea } from "./Header.styles";
@@ -19,6 +19,7 @@ const Header = () => {
 
   const handleInputChange = (e) => {
     setFilter(e.target.value);
+    dispatch(setPage(0));
     dispatch(updateFilter(e.target.value));
   };
   const handleClearClick = () => {
