@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import PropTypes from "prop-types";
 import { updateFilter } from "../../features/podcast/podcastSlice";
 import { Link, useLocation } from "react-router-dom";
 
@@ -63,5 +63,14 @@ const Header = () => {
     </section>
   );
 };
-
+Header.propTypes = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }),
+  showInput: PropTypes.bool,
+  podcast: PropTypes.array,
+  filter: PropTypes.string,
+  filteredPodcasts: PropTypes.array,
+  inputSearch: PropTypes.string,
+};
 export default Header;
