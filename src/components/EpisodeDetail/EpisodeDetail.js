@@ -55,11 +55,9 @@ const EpisodeDetail = () => {
           <h3>by {podcastDetails[0] && artistName}</h3>
           <hr />
           <h4>Description:</h4>
-          <DescriptionParagraf>
-            <p
-              dangerouslySetInnerHTML={{ __html: formatDescription(summary) }}
-            />
-          </DescriptionParagraf>
+          <DescriptionParagraf
+            dangerouslySetInnerHTML={{ __html: formatDescription(summary) }}
+          />
         </BarraLateral>
       </aside>
       <WrapperColumn>

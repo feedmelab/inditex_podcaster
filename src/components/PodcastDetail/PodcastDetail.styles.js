@@ -11,21 +11,22 @@ export const WrapperDetails = styled.div`
   padding-bottom: 2rem;
   animation: ${fadeIn} 200ms ease-in-out forwards;
 `;
-export const DescriptionParagraf = styled.div`
+export const DescriptionParagraf = styled.p`
   display: flex;
-  padding: auto;
-  padding-right: 0.5rem;
-  p {
-    display: flex;
-    width: auto;
-    height: auto;
-    flex-direction: column;
-    white-space: pre-line !important;
+  width: 100%;
+  padding-right: 1rem;
+  height: auto;
+  flex-direction: column;
+  white-space: pre-line !important;
+  a {
+    margin: 0 !important;
+    padding: 0 !important;
   }
 `;
 export const BarraLateral = styled.div`
   margin-top: 2rem;
   width: 12rem;
+
   display: flex;
   justify-content: flex-start;
   padding-top: 2rem !important;

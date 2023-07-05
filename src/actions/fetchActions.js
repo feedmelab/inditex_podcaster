@@ -43,7 +43,7 @@ export const fetchPodcasts = createAsyncThunk(
         "https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json"
       )}`;
       const parsedData = await callAxios(url);
-      console.log(parsedData);
+      //console.log(parsedData);
       const podcasts = parsedData.feed.entry.map((entry) => ({
         id: entry.id.attributes["im:id"],
         summary: entry.summary?.label || "",

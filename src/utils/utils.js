@@ -2,9 +2,9 @@ export const formatDescription = (description) => {
   const urlRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)|([a-z]+\.[a-z]+\/)/g;
   return description.replace(urlRegex, (url) => {
     if (url.startsWith("http")) {
-      return `<a href="${url}" target="_blank">${url}</a>`;
+      return `<span><a href="${url}" target="_blank">${url}</a></span>`;
     } else {
-      return `<a href="https://${url}" target="_blank">${url}</a>`;
+      return `<span><a href="https://${url}" target="_blank">${url}</a></span>`;
     }
   });
 };

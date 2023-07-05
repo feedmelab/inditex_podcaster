@@ -7,16 +7,16 @@ export const WrapperDetails = styled.div`
   width: 100%;
   padding-bottom: 2rem;
 `;
-export const DescriptionParagraf = styled.div`
+export const DescriptionParagraf = styled.p`
   display: flex;
-  padding: auto;
-  padding-right: 0.5rem;
-  p {
-    display: flex;
-    width: auto;
-    height: auto;
-    flex-direction: column;
-    white-space: pre-line !important;
+  height: auto;
+  width: 100%;
+  padding-right: 1rem;
+  flex-direction: column;
+  white-space: pre-line !important;
+  a {
+    margin: 0 !important;
+    padding: 0 !important;
   }
 `;
 export const BarraLateral = styled.div`

@@ -13,6 +13,7 @@ import {
   WrapperDetails,
 } from "./PodcastDetail.styles";
 import { PodcastContainer } from "../PodcastList/PodcastList.styles";
+import { formatDescription } from "../../utils/utils";
 
 const PodcastDetail = () => {
   const location = useLocation();
@@ -95,9 +96,9 @@ const PodcastDetail = () => {
           <h3>by {podcastDetails[0]?.artistName}</h3>
           <hr />
           <h4>Description:</h4>
-          <DescriptionParagraf>
-            <p>{summary}</p>
-          </DescriptionParagraf>
+          <DescriptionParagraf
+            dangerouslySetInnerHTML={{ __html: formatDescription(summary) }}
+          />
         </BarraLateral>
       </aside>
       <WrapperColumn>
