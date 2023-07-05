@@ -8,7 +8,7 @@
 <p align="left"><img src="status.png" width="300px" alt="Api Status" /></p>
 
 visit \
-first visit the page to requests temporary access to the new proxy CORS!!
+first visit the page to requests temporary access to the new proxy CORS!! \
 https://podcaster-omega.vercel.app/ \
 
 ## Available Scripts
