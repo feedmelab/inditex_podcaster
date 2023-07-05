@@ -75,7 +75,7 @@ const podcastSlice = createSlice({
 
         const diffInHours = Math.abs(currentDate - lastFetchedDate) / 36e5;
 
-        state.podcastDetails = action.payload;
+        //state.podcastDetails = action.payload;
 
         if (cachedDetails && diffInHours < 1) {
           state.podcastDetails = cachedDetails.details;
@@ -87,6 +87,7 @@ const podcastSlice = createSlice({
             podcastDetails: action.payload.podcastDetails,
           };
           state.summary = action.payload.summary;
+          state.podcastDetails = action.payload;
         }
       })
       .addCase(fetchPodcastDetails.rejected, (state) => {
