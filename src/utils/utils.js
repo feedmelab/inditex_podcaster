@@ -17,3 +17,9 @@ export const applyFilter = (podcasts, filterValue) => {
     return name.includes(normalizedFilter) || artist.includes(normalizedFilter);
   });
 };
+
+export const isWithinAnHour = (lastFetchDate) => {
+  const currentDate = new Date();
+  const diffInHours = Math.abs(currentDate - new Date(lastFetchDate)) / 36e5;
+  return diffInHours < 1;
+};

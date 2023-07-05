@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { applyFilter } from "../../utils/utils";
+import { applyFilter, isWithinAnHour } from "../../utils/utils";
 import { fetchPodcasts, fetchPodcastDetails } from "../../actions/fetchActions";
 
 const podcastSlice = createSlice({
@@ -38,17 +38,14 @@ const podcastSlice = createSlice({
         state.podcastDetails = null;
       })
       .addCase(fetchPodcasts.fulfilled, (state, action) => {
-        let oneHourAgo = Date.now() - 60 * 60 * 1000;
-        state.podcastDetails = null;
-        if (state.lastFetch > oneHourAgo) {
+        if (state.lastFetch && isWithinAnHour(state.lastFetch)) {
           state.filteredPodcasts = applyFilter(state.podcasts, state.filter);
         } else {
-          // Descargamos y almacenamos los nuevos podcasts en la caché
+          // Download and cache the new podcasts
           state.podcasts = action.payload;
-          state.lastFetch = Date.now();
+          state.lastFetch = new Date().toISOString();
           state.filteredPodcasts = applyFilter(action.payload, state.filter);
         }
-
         state.status = "succeeded";
       })
       .addCase(fetchPodcasts.rejected, (state, action) => {
@@ -65,23 +62,13 @@ const podcastSlice = createSlice({
         state.podcastDetails = action.payload;
 
         const podcastId = action.meta.arg;
-
         const cachedDetails = state.podcastDetailsCache[podcastId];
-        //const currentDate = new Date().toDateString();
 
-        const lastFetchedDate = new Date(cachedDetails?.lastFetchDate);
-
-        const currentDate = new Date();
-
-        const diffInHours = Math.abs(currentDate - lastFetchedDate) / 36e5;
-
-        //state.podcastDetails = action.payload;
-
-        if (cachedDetails && diffInHours < 1) {
+        if (cachedDetails && isWithinAnHour(cachedDetails.lastFetchDate)) {
           state.podcastDetails = cachedDetails.details;
         } else {
           state.podcastDetailsCache[podcastId] = {
-            lastFetchDate: currentDate.toISOString(),
+            lastFetchDate: new Date().toISOString(),
             details: action.payload,
             summary: action.payload.summary,
             podcastDetails: action.payload.podcastDetails,
