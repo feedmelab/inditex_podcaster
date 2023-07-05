@@ -27,8 +27,11 @@
     "styled-components": "^5"
   },
   "scripts": {
+    "rs-start": "react-scripts start",
+    "rs-build": "react-scripts build",
     "start": "webpack serve --config webpack.development.js --open",
-    "build": "webpack --config webpack.production.js | node server.js",
+    "nodeserver": "node server.js",
+    "build": "webpack",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
