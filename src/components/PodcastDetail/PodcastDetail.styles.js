@@ -14,6 +14,7 @@ export const WrapperDetails = styled.div`
 export const DescriptionParagraf = styled.div`
   display: flex;
   padding: auto;
+  padding-right: 0.5rem;
   p {
     display: flex;
     width: auto;
