@@ -88,58 +88,62 @@ const PodcastList = () => {
   return (
     <div data-testid='podcast-item'>
       {filteredPodcasts.length > 0 && (
-        <Paginator>
-          <button
-            onClick={goBack}
-            className='arrow'
-            disabled={currentPage === 0}
-          >
-            &lt;
-          </button>
-          {pageButtons}
-          <button
-            onClick={goForward}
-            className='arrow'
-            disabled={currentPage === pages - 1}
-          >
-            &gt;
-          </button>
-        </Paginator>
-      )}
-      <PodcastContainer>
-        {displayedPodcasts?.length ? (
-          displayedPodcasts.map((podcast, index) => (
-            <PodcastItem
-              key={index}
-              data-testid='podcast-item'
-              onClick={() => handlePodcastClick(podcast)}
+        <nav aria-label='Page navigation'>
+          <Paginator>
+            <button
+              onClick={goBack}
+              className='arrow'
+              disabled={currentPage === 0}
             >
-              <PodcastData className='card px-2 grow-effect'>
-                {podcast["im:image"][0] && (
-                  <Avatar>
-                    <img
-                      data-testid='podcast-image'
-                      src={podcast && podcast["im:image"][2].label}
-                      alt={podcast && podcast["im:name"].label}
-                      onError={(e) => {
-                        e.target.src = "/img/404.jpeg";
-                      }}
-                    />
-                  </Avatar>
-                )}
-                <h2 data-testid='podcast-name'>
-                  {podcast["im:name"].label.toUpperCase()}
-                </h2>
-                <p data-testid='podcast-author'>
-                  Author: {podcast["im:artist"].label}
-                </p>
-              </PodcastData>
-            </PodcastItem>
-          ))
-        ) : (
-          <p>{status !== "loading" && "No se han encontrado podcast."} </p>
-        )}
-      </PodcastContainer>
+              &lt;
+            </button>
+            {pageButtons}
+            <button
+              onClick={goForward}
+              className='arrow'
+              disabled={currentPage === pages - 1}
+            >
+              &gt;
+            </button>
+          </Paginator>
+        </nav>
+      )}
+      <main>
+        <PodcastContainer>
+          {displayedPodcasts?.length ? (
+            displayedPodcasts.map((podcast, index) => (
+              <PodcastItem
+                key={index}
+                data-testid='podcast-item'
+                onClick={() => handlePodcastClick(podcast)}
+              >
+                <PodcastData className='card px-2 grow-effect'>
+                  {podcast["im:image"][0] && (
+                    <Avatar>
+                      <img
+                        data-testid='podcast-image'
+                        src={podcast && podcast["im:image"][2].label}
+                        alt={podcast && podcast["im:name"].label}
+                        onError={(e) => {
+                          e.target.src = "/img/404.jpeg";
+                        }}
+                      />
+                    </Avatar>
+                  )}
+                  <h2 data-testid='podcast-name'>
+                    {podcast["im:name"].label.toUpperCase()}
+                  </h2>
+                  <p data-testid='podcast-author'>
+                    Author: {podcast["im:artist"].label}
+                  </p>
+                </PodcastData>
+              </PodcastItem>
+            ))
+          ) : (
+            <p>{status !== "loading" && "No se han encontrado podcast."} </p>
+          )}
+        </PodcastContainer>
+      </main>
     </div>
   );
 };

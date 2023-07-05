@@ -61,86 +61,91 @@ const PodcastDetail = () => {
 
   return (
     <WrapperDetails className='container'>
-      <BarraLateral className='card'>
-        <Link
-          to={".."}
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(-1);
-          }}
-        >
-          {" "}
-          <img
-            className='grow-effect'
-            src={podcastDetails[0]?.artworkUrl600}
-            alt={podcastDetails[0].collectionName}
-            onError={(e) => {
-              e.target.src = "/img/404.jpeg";
-            }}
-          />
-        </Link>
-        <hr />
-        <h2>
+      <aside>
+        <BarraLateral className='card'>
           <Link
-            data-testid='link-back'
             to={".."}
             onClick={(e) => {
               e.preventDefault();
               navigate(-1);
             }}
           >
-            {podcastDetails[0]?.collectionName}
+            <img
+              className='grow-effect'
+              src={podcastDetails[0]?.artworkUrl600}
+              alt={podcastDetails[0].collectionName}
+              onError={(e) => {
+                e.target.src = "/img/404.jpeg";
+              }}
+            />
           </Link>
-        </h2>
-        <h3>by {podcastDetails[0]?.artistName}</h3>
-        <hr />
-        <h4>Description:</h4>
-        <DescriptionParagraf>
-          <p>{summary}</p>
-        </DescriptionParagraf>
-      </BarraLateral>
+          <hr />
+          <h2>
+            <Link
+              data-testid='link-back'
+              to={".."}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(-1);
+              }}
+            >
+              {podcastDetails[0]?.collectionName}
+            </Link>
+          </h2>
+          <h3>by {podcastDetails[0]?.artistName}</h3>
+          <hr />
+          <h4>Description:</h4>
+          <DescriptionParagraf>
+            <p>{summary}</p>
+          </DescriptionParagraf>
+        </BarraLateral>
+      </aside>
       <WrapperColumn>
-        <BarraEpisodios className='card'>
-          <span>Episodes: {podcastDetails.length - 1}</span>
-        </BarraEpisodios>
-        <ListEpisodios className='card'>
-          <table>
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Date</th>
-                <th>Duration</th>
-              </tr>
-            </thead>
+        <aside>
+          <BarraEpisodios className='card'>
+            <span>Episodes: {podcastDetails.length - 1}</span>
+          </BarraEpisodios>
+        </aside>
+        <main>
+          <ListEpisodios className='card'>
+            <table>
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Date</th>
+                  <th>Duration</th>
+                </tr>
+              </thead>
 
-            {updatedResults?.map((episode, index) => {
-              const duration = moment.duration(episode.trackTimeMillis);
-              const formattedTime = moment
-                .utc(duration.as("milliseconds"))
-                .format("HH:mm");
+              {updatedResults?.map((episode, index) => {
+                const duration = moment.duration(episode.trackTimeMillis);
+                const formattedTime = moment
+                  .utc(duration.as("milliseconds"))
+                  .format("HH:mm");
 
-              return (
-                <tbody key={index}>
-                  <tr>
-                    <td>
-                      <span
-                        onClick={() =>
-                          handleEpisodeClick(podcastId, episode.trackId)
-                        }
-                      >
-                        {episode?.trackName}
-                      </span>
-                    </td>
-                    <td>
-                      {new Date(episode.releaseDate).toLocaleDateString()}
-                    </td>
-                    <td>{formattedTime}</td>
-                  </tr>
-                </tbody>
-              );
-            })}
-          </table>
-        </ListEpisodios>
+                return (
+                  <tbody key={index}>
+                    <tr>
+                      <td>
+                        <span
+                          onClick={() =>
+                            handleEpisodeClick(podcastId, episode.trackId)
+                          }
+                        >
+                          {episode?.trackName}
+                        </span>
+                      </td>
+                      <td>
+                        {new Date(episode.releaseDate).toLocaleDateString()}
+                      </td>
+                      <td>{formattedTime}</td>
+                    </tr>
+                  </tbody>
+                );
+              })}
+            </table>
+          </ListEpisodios>
+        </main>
       </WrapperColumn>
     </WrapperDetails>
   );

@@ -27,33 +27,35 @@ const Header = () => {
     dispatch(updateFilter(""));
   };
   return (
-    <section>
+    <header>
       <CHeader>
-        <nav>
+        <nav aria-label='Header area'>
           <CNavArea>
             <Link to='/' alt='Incio'>
               Podcaster
             </Link>
           </CNavArea>
           {showInput && (
-            <SearchArea className='form-group'>
-              <label htmlFor='podcasts-length' data-testid='podcasts-length'>
-                {filter ? filteredPodcasts.length : podcasts.length}
-              </label>
-              <input
-                type='text'
-                name='input-search'
-                value={filter}
-                onChange={handleInputChange}
-              />
-              {filter && (
-                <ClearButton onClick={handleClearClick}>CLEAR</ClearButton>
-              )}
-            </SearchArea>
+            <form>
+              <SearchArea className='form-group'>
+                <label htmlFor='podcasts-length' data-testid='podcasts-length'>
+                  {filter ? filteredPodcasts.length : podcasts.length}
+                </label>
+                <input
+                  type='text'
+                  name='input-search'
+                  value={filter}
+                  onChange={handleInputChange}
+                />
+                {filter && (
+                  <ClearButton onClick={handleClearClick}>CLEAR</ClearButton>
+                )}
+              </SearchArea>
+            </form>
           )}
         </nav>
       </CHeader>
-    </section>
+    </header>
   );
 };
 Header.propTypes = {
