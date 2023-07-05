@@ -9,7 +9,7 @@ const callAxios = async (url) => {
     const response = await axios.get(url);
 
     if (response.status >= 200 && response.status < 300) {
-      return response.data;
+      return JSON.parse(response.data.contents);
     } else {
       throw new Error(`HTTP status code: ${response.status}`);
     }
@@ -24,7 +24,9 @@ export const fetchPodcastDetails = createAsyncThunk(
   "podcast/fetchPodcastDetails",
   async (podcastId, { rejectWithValue }) => {
     try {
-      const url = `https://cors-anywhere.herokuapp.com/https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=20`;
+      const url = `https://api.allorigins.win/get?url=${encodeURIComponent(
+        `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=20`
+      )}`;
       const parsedData = await callAxios(url);
       return parsedData.results;
     } catch (error) {
@@ -37,9 +39,11 @@ export const fetchPodcasts = createAsyncThunk(
   "podcast/fetchPodcasts",
   async (_, { rejectWithValue }) => {
     try {
-      const url = `https://cors-anywhere.herokuapp.com/https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json`;
+      const url = `https://api.allorigins.win/get?url=${encodeURIComponent(
+        "https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json"
+      )}`;
       const parsedData = await callAxios(url);
-      await callAxios(url);
+      console.log(parsedData);
       const podcasts = parsedData.feed.entry.map((entry) => ({
         id: entry.id.attributes["im:id"],
         summary: entry.summary?.label || "",
