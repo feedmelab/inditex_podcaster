@@ -8,7 +8,7 @@ In the project directory, you can run:
 
 ### `Start`
 
-git clone https://github.com/feedmelab/inditex_podcaster.git 
+git clone https://github.com/feedmelab/inditex_podcaster.git\
 cd inditex_podcaster
 
 Regularly, it's recommended to use git pull to fetch changes from the remote repository and merge them into your local branch. 
