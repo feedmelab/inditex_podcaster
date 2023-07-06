@@ -26,6 +26,7 @@ const EpisodeDetail = () => {
       <aside>
         <BarraLateral className='card'>
           <Link
+            alt='Back'
             data-testid='link-back'
             to={".."}
             onClick={(e) => {
@@ -43,6 +44,7 @@ const EpisodeDetail = () => {
           <h2>
             <Link
               data-testid='link-back'
+              alt='Back'
               to={".."}
               onClick={(e) => {
                 e.preventDefault();

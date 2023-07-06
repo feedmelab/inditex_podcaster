@@ -28,6 +28,7 @@ export const fetchPodcastDetails = createAsyncThunk(
         `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=20`
       )}`;
       const parsedData = await callAxios(url);
+      console.log(parsedData.results);
       return parsedData.results;
     } catch (error) {
       return rejectWithValue(error.message);

@@ -1,10 +1,16 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import { MemoryRouter, Routes, Route } from "react-router-dom";
+import { render, screen, fireEvent } from "@testing-library/react";
+import {
+  BrowserRouter as Router,
+  MemoryRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import PodcastDetail from "./PodcastDetail";
 import thunk from "redux-thunk";
+import EpisodeDetail from "../EpisodeDetail/EpisodeDetail";
 
 const mockStore = configureStore([thunk]);
 const initialState = {
@@ -21,13 +27,10 @@ const initialState = {
       trackName: "Switched on Pop",
       collectionCensoredName: "Switched on Pop",
       trackCensoredName: "Switched on Pop",
-      artistViewUrl:
-        "https://podcasts.apple.com/us/artist/vulture/1536636674?uo=4",
-      collectionViewUrl:
-        "https://podcasts.apple.com/us/podcast/switched-on-pop/id934552872?uo=4",
-      feedUrl: "https://feeds.megaphone.fm/switchedonpop",
-      trackViewUrl:
-        "https://podcasts.apple.com/us/podcast/switched-on-pop/id934552872?uo=4",
+      artistViewUrl: "",
+      collectionViewUrl: "",
+      feedUrl: "",
+      trackViewUrl: "",
       artworkUrl30:
         "https://is2-ssl.mzstatic.com/image/thumb/Podcasts116/v4/6e/7c/17/6e7c170e-ecd6-a572-a851-6b0a02a168c5/mza_7324103647670443393.jpeg/30x30bb.jpg",
       artworkUrl60:
@@ -94,13 +97,30 @@ const store = mockStore(initialState);
 
 test("Mostrar los detalles correctamente", () => {
   render(
-    <MemoryRouter initialEntries={[`/podcast/934552872`]}>
+    <Router
+      initialEntries={[
+        {
+          pathname: "/podcast/1311004083/",
+          state: {
+            summary: "Episode Description",
+            podcastDetails: {
+              artworkUrl600: "https://example.com/episode1.jpg",
+              collectionName: "Podcast Name",
+              artistName: "Ben Gibbard",
+              trackName: "Ben Gibbard",
+              description: "Episode Description",
+              episodeUrl: "https://example.com/episode1.mp3",
+            },
+          },
+        },
+      ]}
+    >
       <Provider store={store}>
         <Routes>
           <Route path='/podcast/:podcastId' element={<PodcastDetail />} />
         </Routes>
       </Provider>
-    </MemoryRouter>
+    </Router>
   );
 
   // expect(screen.getByRole("link")).toBeInTheDocument();
@@ -110,4 +130,87 @@ test("Mostrar los detalles correctamente", () => {
   // expect(screen.getByText("Episode Count: 349")).toBeInTheDocument();
 
   // expect(screen.getByText("Episode 1")).toBeInTheDocument();
+});
+
+test("Muestra el mensaje de carga cuando los detalles están cargando", () => {
+  // const initialState = {
+  //   podcast: {
+  //     podcastDetails: null,
+  //     isFetchingDetails: true,
+  //   },
+  // };
+  const store = mockStore(initialState);
+
+  render(
+    <Router
+      iinitialEntries={[
+        {
+          pathname: `/podcast/1311004083`,
+          state: mockStore,
+        },
+      ]}
+    >
+      <Provider store={store}>
+        <Routes>
+          <Route path='/podcast/:podcastId' element={<EpisodeDetail />} />
+        </Routes>
+      </Provider>
+    </Router>
+  );
+
+  expect(screen.getByText("Loading...")).toBeInTheDocument();
+});
+//expect(screen.getByText("Loading...")).toBeInTheDocument();
+
+test("Redirige al hacer clic en el enlace de regreso", async () => {
+  const initialState = {
+    podcast: {
+      podcastDetails: [
+        {
+          artworkUrl600: "https://example.com/episode1.jpg",
+          collectionName: "Podcast Name",
+          artistName: "Artist Name",
+          trackName: "Ben Gibbard",
+          description: "Episode Description",
+          episodeUrl: "https://example.com/episode1.mp3",
+        },
+      ],
+      isFetchingDetails: false,
+    },
+  };
+  const store = mockStore(initialState);
+  const navigate = jest.fn();
+
+  render(
+    <Router
+      initialEntries={[
+        {
+          pathname: "/podcast/1311004083/",
+          state: {
+            summary: "Episode Description",
+            podcastDetails: {
+              artworkUrl600: "https://example.com/episode1.jpg",
+              collectionName: "Podcast Name",
+              artistName: "Ben Gibbard",
+              trackName: "Ben Gibbard",
+              description: "Episode Description",
+              episodeUrl: "https://example.com/episode1.mp3",
+            },
+          },
+        },
+      ]}
+    >
+      <Provider store={store}>
+        <Routes>
+          <Route path='/podcast/:podcastId/' element={<PodcastDetail />} />
+        </Routes>
+      </Provider>
+    </Router>
+  );
+  let trackName = await screen.findByText("Ben Gibbard");
+  console.log(trackName);
+  const linkBack = screen.getByText("Back");
+  fireEvent.click(linkBack);
+
+  expect(navigate).toHaveBeenCalledWith(-1);
 });
