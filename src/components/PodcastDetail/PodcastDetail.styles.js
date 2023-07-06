@@ -9,7 +9,6 @@ export const WrapperDetails = styled.div`
   justify-content: space-evenly;
   width: 100%;
   padding-bottom: 2rem;
-  animation: ${fadeIn} 200ms ease-in-out forwards;
 `;
 export const DescriptionParagraf = styled.p`
   display: flex;
@@ -67,6 +66,7 @@ export const WrapperColumn = styled.div`
   margin-top: 2rem;
   flex-direction: column;
   width: 60%;
+  animation: ${fadeIn} 200ms ease-in-out forwards;
 `;
 export const BarraEpisodios = styled.div`
   height: 3rem !important;
