@@ -15,8 +15,8 @@ export const WrapperDetails = styled.div`
     justify-content: space-between;
   }
   @media screen and (max-width: 768px) and (orientation: landscape) {
-    flex-direction: column;
-    align-items: center;
+    align-items: left;
+    justify-content: space-between;
   }
 `;
 export const DescriptionParagraf = styled.p`
