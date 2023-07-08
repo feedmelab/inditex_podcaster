@@ -147,27 +147,28 @@ const PodcastList = () => {
             </p>
           )}
         </PodcastContainer>
-        {filteredPodcasts.length > 0 && (
-          <nav aria-label='Page navigation'>
-            <Paginator>
-              <button
-                onClick={goBack}
-                className='arrow'
-                disabled={currentPage === 0}
-              >
-                &lt;
-              </button>
-              {pageButtons}
-              <button
-                onClick={goForward}
-                className='arrow'
-                disabled={currentPage === pages - 1}
-              >
-                &gt;
-              </button>
-            </Paginator>
-          </nav>
-        )}
+        {filteredPodcasts.length > 0 &&
+          currentPage < pageButtons.length - 1 && (
+            <nav aria-label='Page navigation'>
+              <Paginator>
+                <button
+                  onClick={goBack}
+                  className='arrow'
+                  disabled={currentPage === 0}
+                >
+                  &lt;
+                </button>
+                {pageButtons}
+                <button
+                  onClick={goForward}
+                  className='arrow'
+                  disabled={currentPage === pages - 1}
+                >
+                  &gt;
+                </button>
+              </Paginator>
+            </nav>
+          )}
       </main>
     </div>
   );

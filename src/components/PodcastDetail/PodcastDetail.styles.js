@@ -104,7 +104,7 @@ export const BarraLateral = styled.div`
       font-weight: bold;
     }
     hr {
-      width: 100%;
+      width: 10rem;
       height: 1px;
       margin-top: 0%;
       margin-left: 1rem;

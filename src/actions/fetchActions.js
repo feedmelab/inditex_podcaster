@@ -7,7 +7,6 @@ loadAxiosProgress(axios);
 const callAxios = async (url) => {
   try {
     const response = await axios.get(url);
-
     if (response.status >= 200 && response.status < 300) {
       return JSON.parse(response.data.contents);
     } else {
@@ -28,7 +27,7 @@ export const fetchPodcastDetails = createAsyncThunk(
         `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=20`
       )}`;
       const parsedData = await callAxios(url);
-      console.log(parsedData.results);
+
       return parsedData.results;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -44,7 +43,6 @@ export const fetchPodcasts = createAsyncThunk(
         'https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json'
       )}`;
       const parsedData = await callAxios(url);
-      //console.log(parsedData);
       const podcasts = parsedData.feed.entry.map((entry) => ({
         id: entry.id.attributes['im:id'],
         summary: entry.summary?.label || '',
