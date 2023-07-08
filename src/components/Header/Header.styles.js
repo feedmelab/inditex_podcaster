@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const CHeader = styled.div`
   text-decoration: none;
@@ -14,7 +14,7 @@ export const CNavArea = styled.div`
     text-decoration: none;
     color: var(--primary-color);
     font-size: 1.8rem;
-    font-weight: bold;
+    font-weight: bolder;
   }
 `;
 export const SearchArea = styled.div`

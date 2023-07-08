@@ -1,6 +1,6 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import { loadAxiosProgress } from "axios-progress";
+import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { loadAxiosProgress } from 'axios-progress';
 
 loadAxiosProgress(axios);
 
@@ -21,7 +21,7 @@ const callAxios = async (url) => {
 };
 
 export const fetchPodcastDetails = createAsyncThunk(
-  "podcast/fetchPodcastDetails",
+  'podcast/fetchPodcastDetails',
   async (podcastId, { rejectWithValue }) => {
     try {
       const url = `https://api.allorigins.win/get?url=${encodeURIComponent(
@@ -37,20 +37,20 @@ export const fetchPodcastDetails = createAsyncThunk(
 );
 
 export const fetchPodcasts = createAsyncThunk(
-  "podcast/fetchPodcasts",
+  'podcast/fetchPodcasts',
   async (_, { rejectWithValue }) => {
     try {
       const url = `https://api.allorigins.win/get?url=${encodeURIComponent(
-        "https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json"
+        'https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json'
       )}`;
       const parsedData = await callAxios(url);
       //console.log(parsedData);
       const podcasts = parsedData.feed.entry.map((entry) => ({
-        id: entry.id.attributes["im:id"],
-        summary: entry.summary?.label || "",
-        "im:name": { label: entry["im:name"].label },
-        "im:artist": { label: entry["im:artist"].label },
-        "im:image": entry["im:image"].map((image) => ({
+        id: entry.id.attributes['im:id'],
+        summary: entry.summary?.label || '',
+        'im:name': { label: entry['im:name'].label },
+        'im:artist': { label: entry['im:artist'].label },
+        'im:image': entry['im:image'].map((image) => ({
           label: image.label,
           attributes: { height: image.attributes.height },
         })),

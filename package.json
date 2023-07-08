@@ -33,7 +33,7 @@
     "start": "webpack serve --config webpack.development.js --open",
     "nodeserver": "node server.js",
     "build": "webpack",
-    "test": "react-scripts test",
+    "test": "vitest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -68,11 +68,18 @@
     "path": "^0.12.7",
     "sass": "^1.63.6",
     "sass-loader": "^13.3.2",
+    "standard": "^17.1.0",
     "style-loader": "^3.3.3",
     "terser-webpack-plugin": "^5.3.9",
     "url-loader": "^4.1.1",
+    "vitest": "^0.33.0",
     "webpack": "^5.88.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "axios": "/node_modules/axios/dist/node/axios.cjs"
+    }
   }
 }

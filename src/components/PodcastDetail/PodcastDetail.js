@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import { fetchPodcastDetails } from "../../actions/fetchActions";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import moment from "moment";
+import React, { useEffect } from 'react';
+import { fetchPodcastDetails } from '../../actions/fetchActions.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import moment from 'moment';
 
 import {
   BarraEpisodios,
@@ -11,9 +11,9 @@ import {
   ListEpisodios,
   WrapperColumn,
   WrapperDetails,
-} from "./PodcastDetail.styles";
-import { PodcastContainer } from "../PodcastList/PodcastList.styles";
-import { formatDescription } from "../../utils/utils";
+} from './PodcastDetail.styles.js';
+import { PodcastContainer } from '../PodcastList/PodcastList.styles.js';
+import { formatDescription } from '../../utils/utils.js';
 
 const PodcastDetail = () => {
   const location = useLocation();
@@ -65,7 +65,7 @@ const PodcastDetail = () => {
       <aside>
         <BarraLateral className='card'>
           <Link
-            to={".."}
+            to={'..'}
             onClick={(e) => {
               e.preventDefault();
               navigate(-1);
@@ -76,29 +76,31 @@ const PodcastDetail = () => {
               src={podcastDetails[0]?.artworkUrl600}
               alt={podcastDetails[0].collectionName}
               onError={(e) => {
-                e.target.src = "/img/404.jpeg";
+                e.target.src = '/img/404.jpeg';
               }}
             />
           </Link>
-          <hr />
-          <h2>
-            <Link
-              data-testid='link-back'
-              to={".."}
-              onClick={(e) => {
-                e.preventDefault();
-                navigate(-1);
-              }}
-            >
-              {podcastDetails[0]?.collectionName}
-            </Link>
-          </h2>
-          <h3>by {podcastDetails[0]?.artistName}</h3>
-          <hr />
-          <h4>Description:</h4>
-          <DescriptionParagraf
-            dangerouslySetInnerHTML={{ __html: formatDescription(summary) }}
-          />
+          <div>
+            <hr />
+            <h2>
+              <Link
+                data-testid='link-back'
+                to={'..'}
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate(-1);
+                }}
+              >
+                {podcastDetails[0]?.collectionName}
+              </Link>
+            </h2>
+            <h3>by {podcastDetails[0]?.artistName}</h3>
+            <hr />
+            <h4>Description:</h4>
+            <DescriptionParagraf
+              dangerouslySetInnerHTML={{ __html: formatDescription(summary) }}
+            />
+          </div>
         </BarraLateral>
       </aside>
       <WrapperColumn>
@@ -121,8 +123,8 @@ const PodcastDetail = () => {
               {updatedResults?.map((episode, index) => {
                 const duration = moment.duration(episode.trackTimeMillis);
                 const formattedTime = moment
-                  .utc(duration.as("milliseconds"))
-                  .format("HH:mm");
+                  .utc(duration.as('milliseconds'))
+                  .format('HH:mm');
 
                 return (
                   <tbody key={index}>

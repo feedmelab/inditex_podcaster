@@ -1,15 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { applyFilter, isWithinAnHour } from "../../utils/utils";
-import { fetchPodcasts, fetchPodcastDetails } from "../../actions/fetchActions";
+import { createSlice } from '@reduxjs/toolkit';
+import { applyFilter, isWithinAnHour } from '../../utils/utils.js';
+import {
+  fetchPodcasts,
+  fetchPodcastDetails,
+} from '../../actions/fetchActions.js';
 
 const podcastSlice = createSlice({
-  name: "podcast",
+  name: 'podcast',
   initialState: {
     podcasts: [],
-    status: "idle",
+    status: 'idle',
     error: null,
     lastFetch: null,
-    filter: "",
+    filter: '',
     filteredPodcasts: [],
     isFetchingDetails: false,
     podcastDetails: null,
@@ -34,7 +37,7 @@ const podcastSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchPodcasts.pending, (state) => {
-        state.status = "loading";
+        state.status = 'loading';
         state.podcastDetails = null;
       })
       .addCase(fetchPodcasts.fulfilled, (state, action) => {
@@ -46,10 +49,10 @@ const podcastSlice = createSlice({
           state.lastFetch = new Date().toISOString();
           state.filteredPodcasts = applyFilter(action.payload, state.filter);
         }
-        state.status = "succeeded";
+        state.status = 'succeeded';
       })
       .addCase(fetchPodcasts.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         state.podcastDetails = null;
         state.error = action.error.message;
       })

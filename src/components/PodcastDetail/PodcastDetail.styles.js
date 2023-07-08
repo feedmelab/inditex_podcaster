@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
 const fadeIn = keyframes`
   0% {opacity: 0;}
   100% {opacity: 1;}
@@ -9,6 +9,16 @@ export const WrapperDetails = styled.div`
   justify-content: space-evenly;
   width: 100%;
   padding-bottom: 2rem;
+  /* Small devices (portait phones, 576px and up) */
+  @media screen and (max-width: 768px) and (orientation: portrait) {
+    flex-direction: column;
+    align-items: left;
+    justify-content: space-between;
+  }
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 export const DescriptionParagraf = styled.p`
   display: flex;
@@ -60,6 +70,46 @@ export const BarraLateral = styled.div`
     width: 10rem;
     color: var(--bar-color);
   }
+  @media screen and (max-width: 768px) and (orientation: portrait) {
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    div {
+      display: flex;
+      padding: 0 !important;
+      margin: 0 !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
+      width: 13rem !important;
+    }
+    img {
+      width: 7rem;
+
+      margin-left: 1rem !important;
+    }
+    a {
+      text-align: left !important;
+    }
+    h2,
+    h4 {
+      align-self: flex-start;
+      justify-self: flex-start;
+      width: max-content;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    hr {
+      width: 10rem;
+      height: 1px;
+      margin-top: 0%;
+      margin-bottom: 0.3rem;
+      color: var(--bar-color);
+    }
+  }
 `;
 export const WrapperColumn = styled.div`
   display: flex;
@@ -67,9 +117,16 @@ export const WrapperColumn = styled.div`
   flex-direction: column;
   width: 60%;
   animation: ${fadeIn} 200ms ease-in-out forwards;
+
+  @media screen and (max-width: 768px) and (orientation: portrait) {
+    width: 100%;
+  }
 `;
 export const BarraEpisodios = styled.div`
+  display: flex;
+  border: 1px solid silver;
   height: 3rem !important;
+  width: 100% !important;
   padding-left: calc(var(--min-spacer) * 4) !important;
   span {
     font-size: 1.4rem;

@@ -1,17 +1,17 @@
-import React, { useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchPodcasts } from "../../actions/fetchActions";
+import React, { useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchPodcasts } from '../../actions/fetchActions.js';
 
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import {
   Avatar,
   PodcastContainer,
   PodcastData,
   PodcastItem,
   Paginator,
-} from "./PodcastList.styles";
-import { setPage } from "../../features/podcast/podcastSlice";
+} from './PodcastList.styles.js';
+import { setPage } from '../../features/podcast/podcastSlice.js';
 
 const PodcastList = () => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const PodcastList = () => {
   );
 
   useEffect(() => {
-    if (status === "idle") {
+    if (status === 'idle') {
       dispatch(fetchPodcasts());
     }
   }, [dispatch, status]);
@@ -40,8 +40,8 @@ const PodcastList = () => {
   const filteredPodcasts = useMemo(
     () =>
       podcasts.filter((podcast) => {
-        const name = podcast["im:name"].label.toLowerCase();
-        const artist = podcast["im:artist"].label.toLowerCase();
+        const name = podcast['im:name'].label.toLowerCase();
+        const artist = podcast['im:artist'].label.toLowerCase();
         const filterValue = filter.toLowerCase();
         return name.includes(filterValue) || artist.includes(filterValue);
       }),
@@ -61,7 +61,7 @@ const PodcastList = () => {
       <button
         key={i}
         onClick={() => setCurrentPage(i)}
-        className={currentPage === i ? "active" : ""}
+        className={currentPage === i ? 'active' : ''}
       >
         {i + 1}
       </button>
@@ -118,31 +118,56 @@ const PodcastList = () => {
                 onClick={() => handlePodcastClick(podcast)}
               >
                 <PodcastData className='card px-2 grow-effect'>
-                  {podcast["im:image"][0] && (
+                  {podcast['im:image'][0] && (
                     <Avatar>
                       <img
                         data-testid='podcast-image'
-                        src={podcast && podcast["im:image"][2].label}
-                        alt={podcast && podcast["im:name"].label}
+                        src={podcast && podcast['im:image'][2].label}
+                        alt={podcast && podcast['im:name'].label}
                         onError={(e) => {
-                          e.target.src = "/img/404.jpeg";
+                          e.target.src = '/img/404.jpeg';
                         }}
                       />
                     </Avatar>
                   )}
                   <h2 data-testid='podcast-name'>
-                    {podcast["im:name"].label.toUpperCase()}
+                    {podcast['im:name'].label.toUpperCase()}
                   </h2>
                   <p data-testid='podcast-author'>
-                    Author: {podcast["im:artist"].label}
+                    Author: {podcast['im:artist'].label}
                   </p>
                 </PodcastData>
               </PodcastItem>
             ))
           ) : (
-            <p>{status !== "loading" && "No se han encontrado podcast."} </p>
+            <p>
+              {status !== 'loading'
+                ? 'No se han encontrado podcast.'
+                : 'Descargando podcast, \n por favor espere...'}
+            </p>
           )}
         </PodcastContainer>
+        {filteredPodcasts.length > 0 && (
+          <nav aria-label='Page navigation'>
+            <Paginator>
+              <button
+                onClick={goBack}
+                className='arrow'
+                disabled={currentPage === 0}
+              >
+                &lt;
+              </button>
+              {pageButtons}
+              <button
+                onClick={goForward}
+                className='arrow'
+                disabled={currentPage === pages - 1}
+              >
+                &gt;
+              </button>
+            </Paginator>
+          </nav>
+        )}
       </main>
     </div>
   );
@@ -156,13 +181,13 @@ PodcastList.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       summary: PropTypes.string,
-      "im:name": PropTypes.shape({
+      'im:name': PropTypes.shape({
         label: PropTypes.string.isRequired,
       }),
-      "im:artist": PropTypes.shape({
+      'im:artist': PropTypes.shape({
         label: PropTypes.string.isRequired,
       }),
-      "im:image": PropTypes.arrayOf(
+      'im:image': PropTypes.arrayOf(
         PropTypes.shape({
           label: PropTypes.string.isRequired,
           attributes: PropTypes.shape({

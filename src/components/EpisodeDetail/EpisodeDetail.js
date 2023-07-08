@@ -1,6 +1,6 @@
-import React from "react";
-import { useLocation, useNavigate, Link } from "react-router-dom";
-import { formatDescription } from "../../utils/utils";
+import React from 'react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { formatDescription } from '../../utils/utils.js';
 
 import {
   BarraLateral,
@@ -8,7 +8,7 @@ import {
   ListEpisodio,
   WrapperColumn,
   WrapperDetails,
-} from "./Episodedetail.styles";
+} from './Episodedetail.styles.js';
 
 const EpisodeDetail = () => {
   const location = useLocation();
@@ -26,9 +26,7 @@ const EpisodeDetail = () => {
       <aside>
         <BarraLateral className='card'>
           <Link
-            alt='Back'
-            data-testid='link-back'
-            to={".."}
+            to={'..'}
             onClick={(e) => {
               e.preventDefault();
               navigate(-1);
@@ -37,29 +35,33 @@ const EpisodeDetail = () => {
             <img
               className='grow-effect'
               src={podcastDetails[0]?.artworkUrl600}
-              alt={podcastDetails[0]?.collectionName}
+              alt={podcastDetails[0].collectionName}
+              onError={(e) => {
+                e.target.src = '/img/404.jpeg';
+              }}
             />
           </Link>
-          <hr />
-          <h2>
-            <Link
-              data-testid='link-back'
-              alt='Back'
-              to={".."}
-              onClick={(e) => {
-                e.preventDefault();
-                navigate(-1);
-              }}
-            >
-              {podcastDetails[0] && podcastDetails[0]?.collectionName}
-            </Link>
-          </h2>
-          <h3>by {podcastDetails[0] && artistName}</h3>
-          <hr />
-          <h4>Description:</h4>
-          <DescriptionParagraf
-            dangerouslySetInnerHTML={{ __html: formatDescription(summary) }}
-          />
+          <div>
+            <hr />
+            <h2>
+              <Link
+                data-testid='link-back'
+                to={'..'}
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate(-1);
+                }}
+              >
+                {podcastDetails[0]?.collectionName}
+              </Link>
+            </h2>
+            <h3>by {podcastDetails[0] && artistName}</h3>
+            <hr />
+            <h4>Description:</h4>
+            <DescriptionParagraf
+              dangerouslySetInnerHTML={{ __html: formatDescription(summary) }}
+            />
+          </div>
         </BarraLateral>
       </aside>
       <WrapperColumn>
@@ -68,13 +70,22 @@ const EpisodeDetail = () => {
             <h2 data-testid='titulo-podcast'>
               {podcastDetails[0] && podcastDetails[0]?.trackName}
             </h2>
+            <div className='audio-player'>
+              <audio controls aria-label={podcastDetails[0]?.trackName}>
+                <source
+                  src={podcastDetails[0] && podcastDetails[0]?.episodeUrl}
+                  type='audio/mpeg'
+                />
+                Your browser does not support the audio element.
+              </audio>
+            </div>
             <p
               dangerouslySetInnerHTML={{
                 __html:
                   podcastDetails[0] &&
                   formatDescription(podcastDetails[0]?.description),
               }}
-            ></p>
+            />
 
             <div className='audio-player'>
               <audio controls aria-label={podcastDetails[0]?.trackName}>

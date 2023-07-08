@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
 
 const fadeIn = keyframes`
   0% {opacity: 0;}
@@ -22,6 +22,7 @@ export const Paginator = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 1rem;
   padding: 20px;
 
   button {
@@ -76,6 +77,19 @@ export const PodcastContainer = styled.ul`
   justify-content: center;
   text-align: center;
   margin-top: 4rem;
+  /* Small devices (portait phones, 576px and up) */
+  @media screen and (max-width: 768px) and (orientation: portrait) {
+    flex-flow: column wrap;
+    padding: 0px;
+    justify-content: space-between;
+    align-items: center;
+    /* border: 1px solid red; */
+  }
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    justify-content: space-evenly;
+    padding: 0px;
+    align-items: center;
+  }
 `;
 export const PodcastItem = styled.li`
   display: flex;
@@ -128,3 +142,12 @@ export const PodcastData = styled.div`
   box-shadow: rgba(5, 5, 93, 0.15) 0px 2px 2px -1px,
     rgba(0, 0, 0, 0.2) 0px 1px 3px -1px;
 `;
+
+// /* Medium devices (tablets, 768px and up) */
+// @media (min-width: 768px) { ... }
+
+// /* Large devices (desktops, 992px and up) */
+// @media (min-width: 992px) { ... }
+
+// /* Extra large devices (large desktops, 1200px and up) */
+// @media (min-width: 1200px) { ... }

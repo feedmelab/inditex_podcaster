@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import PropTypes from "prop-types";
-import { setPage, updateFilter } from "../../features/podcast/podcastSlice";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { setPage, updateFilter } from '../../features/podcast/podcastSlice.js';
+import { Link, useLocation } from 'react-router-dom';
 
-import { CHeader, CNavArea, ClearButton, SearchArea } from "./Header.styles";
+import { CHeader, CNavArea, ClearButton, SearchArea } from './Header.styles.js';
 
 const Header = () => {
   const location = useLocation();
-  const showInput = !location.pathname.includes("podcast");
+  const showInput = !location.pathname.includes('podcast');
 
   const { podcasts } = useSelector((state) => state.podcast);
   const dispatch = useDispatch();
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState('');
   const filteredPodcasts = useSelector(
     (state) => state.podcast.filteredPodcasts
   );
@@ -23,8 +23,8 @@ const Header = () => {
     dispatch(updateFilter(e.target.value));
   };
   const handleClearClick = () => {
-    setFilter("");
-    dispatch(updateFilter(""));
+    setFilter('');
+    dispatch(updateFilter(''));
   };
   return (
     <header>
@@ -69,13 +69,13 @@ Header.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       summary: PropTypes.string,
-      "im:name": PropTypes.shape({
+      'im:name': PropTypes.shape({
         label: PropTypes.string.isRequired,
       }),
-      "im:artist": PropTypes.shape({
+      'im:artist': PropTypes.shape({
         label: PropTypes.string.isRequired,
       }),
-      "im:image": PropTypes.arrayOf(
+      'im:image': PropTypes.arrayOf(
         PropTypes.shape({
           label: PropTypes.string.isRequired,
           attributes: PropTypes.shape({

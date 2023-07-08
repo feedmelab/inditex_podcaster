@@ -1,15 +1,15 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { StyleSheetManager } from "styled-components";
-import Header from "./components/Header/Header";
-import PodcastList from "./components/PodcastList/PodcastList";
-import PodcastDetail from "./components/PodcastDetail/PodcastDetail";
-import EpisodeDetail from "./components/EpisodeDetail/EpisodeDetail";
-import "./App.css";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { StyleSheetManager } from 'styled-components';
+import Header from './components/Header/Header.js';
+import PodcastList from './components/PodcastList/PodcastList.js';
+import PodcastDetail from './components/PodcastDetail/PodcastDetail.js';
+import EpisodeDetail from './components/EpisodeDetail/EpisodeDetail.js';
+import './App.css';
 
 function App() {
   return (
-    <StyleSheetManager shouldForwardProp={(prop) => prop !== "theme"}>
+    <StyleSheetManager shouldForwardProp={(prop) => prop !== 'theme'}>
       <Router>
         <div className='container App '>
           <Header />

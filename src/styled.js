@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 // const getHeightDoc = () => {
 //   const { scrollHeight: height } = document.body;
@@ -10,11 +10,11 @@ import { createGlobalStyle } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
     
     p {
-        font-family: "Roboto", sans-serif;
+        font-family: "Raleway", sans-serif;
     }
 
 	body {
-        font-family: "Roboto", sans-serif;    
+        font-family: "Raleway", sans-serif;    
 	}
     a{
         text-decoration: none !important;
