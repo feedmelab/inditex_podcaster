@@ -105,6 +105,7 @@ export const BarraLateral = styled.div`
       width: 10rem;
       height: 1px;
       margin-top: 0%;
+      margin-left: 1rem;
       margin-bottom: 0.3rem;
       color: var(--bar-color);
     }

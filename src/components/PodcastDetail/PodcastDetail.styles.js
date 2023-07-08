@@ -84,7 +84,8 @@ export const BarraLateral = styled.div`
       flex-direction: column !important;
       align-items: flex-start !important;
       justify-content: flex-start !important;
-      width: 13rem !important;
+      min-width: 13rem !important;
+      max-width: 60%;
     }
     img {
       width: 7rem;
@@ -103,9 +104,10 @@ export const BarraLateral = styled.div`
       font-weight: bold;
     }
     hr {
-      width: 10rem;
+      width: 100%;
       height: 1px;
       margin-top: 0%;
+      margin-left: 1rem;
       margin-bottom: 0.3rem;
       color: var(--bar-color);
     }

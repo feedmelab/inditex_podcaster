@@ -87,7 +87,7 @@ const EpisodeDetail = () => {
               }}
             />
 
-            <div className='audio-player'>
+            {/* <div className='audio-player'>
               <audio controls aria-label={podcastDetails[0]?.trackName}>
                 <source
                   src={podcastDetails[0] && podcastDetails[0]?.episodeUrl}
@@ -95,7 +95,7 @@ const EpisodeDetail = () => {
                 />
                 Your browser does not support the audio element.
               </audio>
-            </div>
+            </div> */}
           </ListEpisodio>
         </main>
       </WrapperColumn>
