@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchPodcastDetails = createAsyncThunk(
@@ -65,12 +66,17 @@ const applyFilter = (podcasts, filterValue) => {
   });
 };
 =======
+=======
+>>>>>>> e167561aa1606e8f8543e62ac66e77f84161dd53
 import { createSlice } from '@reduxjs/toolkit';
 import { applyFilter, isWithinAnHour } from '../../utils/utils.js';
 import {
   fetchPodcasts,
   fetchPodcastDetails,
 } from '../../actions/fetchActions.js';
+<<<<<<< HEAD
+>>>>>>> e167561aa1606e8f8543e62ac66e77f84161dd53
+=======
 >>>>>>> e167561aa1606e8f8543e62ac66e77f84161dd53
 
 const podcastSlice = createSlice({
@@ -107,6 +113,7 @@ const podcastSlice = createSlice({
       .addCase(fetchPodcasts.pending, (state) => {
         state.status = 'loading';
 <<<<<<< HEAD
+<<<<<<< HEAD
       })
       .addCase(fetchPodcasts.fulfilled, (state, action) => {
         state.status = 'succeeded';
@@ -116,6 +123,24 @@ const podcastSlice = createSlice({
       })
       .addCase(fetchPodcasts.rejected, (state, action) => {
         state.status = 'failed';
+=======
+        state.podcastDetails = null;
+      })
+      .addCase(fetchPodcasts.fulfilled, (state, action) => {
+        if (state.lastFetch && isWithinAnHour(state.lastFetch)) {
+          state.filteredPodcasts = applyFilter(state.podcasts, state.filter);
+        } else {
+          // Download and cache the new podcasts
+          state.podcasts = action.payload;
+          state.lastFetch = new Date().toISOString();
+          state.filteredPodcasts = applyFilter(action.payload, state.filter);
+        }
+        state.status = 'succeeded';
+      })
+      .addCase(fetchPodcasts.rejected, (state, action) => {
+        state.status = 'failed';
+        state.podcastDetails = null;
+>>>>>>> e167561aa1606e8f8543e62ac66e77f84161dd53
 =======
         state.podcastDetails = null;
       })
