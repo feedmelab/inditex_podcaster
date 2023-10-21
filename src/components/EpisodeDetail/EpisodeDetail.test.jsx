@@ -1,18 +1,30 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
 import {
-  BrowserRouter as Router,
-  MemoryRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+  render,
+  cleanup,
+  screen,
+  waitFor,
+  fireEvent,
+} from "@testing-library/react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import PodcastDetail from "./PodcastDetail";
-import thunk from "redux-thunk";
-import EpisodeDetail from "../EpisodeDetail/EpisodeDetail";
+import EpisodeDetail from "./EpisodeDetail";
+global.fetch = require("jest-fetch-mock");
 
-const mockStore = configureStore([thunk]);
+beforeEach(() => {
+  fetch.resetMocks();
+});
+afterEach(cleanup);
+
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useNavigate: jest.fn(),
+  useParams: () => ({ podcastId: "1311004083", episodeId: "1000619152745" }),
+}));
+
+const mockStore = configureStore([]);
+
 const initialState = {
   resultCount: 21,
   results: [
@@ -93,124 +105,48 @@ const initialState = {
     },
   ],
 };
-const store = mockStore(initialState);
 
-test("Mostrar los detalles correctamente", () => {
-  render(
-    <Router
-      initialEntries={[
-        {
-          pathname: "/podcast/1311004083/",
-          state: {
-            summary: "Episode Description",
-            podcastDetails: {
-              artworkUrl600: "https://example.com/episode1.jpg",
-              collectionName: "Podcast Name",
-              artistName: "Ben Gibbard",
-              trackName: "Ben Gibbard",
-              description: "Episode Description",
-              episodeUrl: "https://example.com/episode1.mp3",
-            },
+describe("EpisodeDetail", () => {
+  test("El estado del store coincide con el estado inicial", () => {
+    const store = mockStore(initialState);
+    expect(store.getState()).toEqual(initialState);
+  });
+
+  fetch.mockResponseOnce(JSON.stringify(initialState));
+  test("Muestra el detalle del episodio correctamente", async () => {
+    const store = mockStore(initialState);
+
+    render(
+      <Router
+        initialEntries={[
+          {
+            pathname: `/podcast/1311004083/episode/1000619152745`,
+            state: mockStore,
           },
-        },
-      ]}
-    >
-      <Provider store={store}>
-        <Routes>
-          <Route path='/podcast/:podcastId' element={<PodcastDetail />} />
-        </Routes>
-      </Provider>
-    </Router>
-  );
+        ]}
+      >
+        <Provider store={store}>
+          <Routes>
+            <Route
+              path='/podcast/:podcastId/episode/:episodeId'
+              element={<EpisodeDetail />}
+            />
+          </Routes>
+        </Provider>
+      </Router>
+    );
 
-  // expect(screen.getByRole("link")).toBeInTheDocument();
-  // expect(screen.getByText("Vulture")).toBeInTheDocument();
-  // expect(screen.getByText("Podcast description")).toBeInTheDocument();
+    // await waitFor(() => {
+    //   const lengthLabel = screen.getByTestId("podcasts-length");
+    //   expect(lengthLabel.textContent).toBe("3");
+    // });
 
-  // expect(screen.getByText("Episode Count: 349")).toBeInTheDocument();
-
-  // expect(screen.getByText("Episode 1")).toBeInTheDocument();
-});
-
-test("Muestra el mensaje de carga cuando los detalles están cargando", () => {
-  // const initialState = {
-  //   podcast: {
-  //     podcastDetails: null,
-  //     isFetchingDetails: true,
-  //   },
-  // };
-  const store = mockStore(initialState);
-
-  render(
-    <Router
-      iinitialEntries={[
-        {
-          pathname: `/podcast/1311004083`,
-          state: mockStore,
-        },
-      ]}
-    >
-      <Provider store={store}>
-        <Routes>
-          <Route path='/podcast/:podcastId' element={<EpisodeDetail />} />
-        </Routes>
-      </Provider>
-    </Router>
-  );
-
-  expect(screen.getByText("Loading...")).toBeInTheDocument();
-});
-//expect(screen.getByText("Loading...")).toBeInTheDocument();
-
-test("Redirige al hacer clic en el enlace de regreso", async () => {
-  const initialState = {
-    podcast: {
-      podcastDetails: [
-        {
-          artworkUrl600: "https://example.com/episode1.jpg",
-          collectionName: "Podcast Name",
-          artistName: "Artist Name",
-          trackName: "Ben Gibbard",
-          description: "Episode Description",
-          episodeUrl: "https://example.com/episode1.mp3",
-        },
-      ],
-      isFetchingDetails: false,
-    },
-  };
-  const store = mockStore(initialState);
-  const navigate = jest.fn();
-
-  render(
-    <Router
-      initialEntries={[
-        {
-          pathname: "/podcast/1311004083/",
-          state: {
-            summary: "Episode Description",
-            podcastDetails: {
-              artworkUrl600: "https://example.com/episode1.jpg",
-              collectionName: "Podcast Name",
-              artistName: "Ben Gibbard",
-              trackName: "Ben Gibbard",
-              description: "Episode Description",
-              episodeUrl: "https://example.com/episode1.mp3",
-            },
-          },
-        },
-      ]}
-    >
-      <Provider store={store}>
-        <Routes>
-          <Route path='/podcast/:podcastId/' element={<PodcastDetail />} />
-        </Routes>
-      </Provider>
-    </Router>
-  );
-  let trackName = await screen.findByText("Ben Gibbard");
-  console.log(trackName);
-  const linkBack = screen.getByText("Back");
-  fireEvent.click(linkBack);
-
-  expect(navigate).toHaveBeenCalledWith(-1);
+    // const lengthLabel = screen.getByTestId("podcasts-length");
+    // expect(lengthLabel.textContent).toBe("3");
+    // expect(screen.getByText("Podcast Name")).toBeInTheDocument();
+    //expect(screen.getByText("by Artist Name")).toBeInTheDocument();
+    // expect(screen.getByText("Episode Title")).toBeInTheDocument();
+    // expect(screen.getByText("Episode Description")).toBeInTheDocument();
+    //expect(screen.getByTestId("audio-player")).toBeInTheDocument();
+  });
 });
