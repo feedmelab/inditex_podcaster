@@ -1,17 +1,17 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchPodcastDetails = createAsyncThunk(
-  "podcast/fetchPodcastDetails",
+  'podcast/fetchPodcastDetails',
   async (podcastId, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `https://api.allorigins.win/get?url=${encodeURIComponent(
+        `https://corsproxy.io/?${encodeURIComponent(
           `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=20`
         )}`
       );
 
       if (!response.ok) {
-        throw new Error("Server response was not ok.");
+        throw new Error('Server response was not ok.');
       }
 
       const data = await response.json();
@@ -24,27 +24,27 @@ export const fetchPodcastDetails = createAsyncThunk(
 );
 
 export const fetchPodcasts = createAsyncThunk(
-  "podcast/fetchPodcasts",
+  'podcast/fetchPodcasts',
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `https://api.allorigins.win/get?url=${encodeURIComponent(
-          "https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json"
+        `https://corsproxy.io/?${encodeURIComponent(
+          `https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json`
         )}`
       );
 
       if (!response.ok) {
-        throw new Error("Server response was not ok.");
+        throw new Error('Server response was not ok.');
       }
 
       const data = await response.json();
       const parsedData = JSON.parse(data.contents);
       return parsedData.feed.entry.map((entry) => ({
-        id: entry.id.attributes["im:id"],
-        summary: entry.summary?.label || "",
-        "im:name": { label: entry["im:name"].label },
-        "im:artist": { label: entry["im:artist"].label },
-        "im:image": entry["im:image"].map((image) => ({
+        id: entry.id.attributes['im:id'],
+        summary: entry.summary?.label || '',
+        'im:name': { label: entry['im:name'].label },
+        'im:artist': { label: entry['im:artist'].label },
+        'im:image': entry['im:image'].map((image) => ({
           label: image.label,
           attributes: { height: image.attributes.height },
         })),
@@ -58,20 +58,20 @@ export const fetchPodcasts = createAsyncThunk(
 const applyFilter = (podcasts, filterValue) => {
   const normalizedFilter = filterValue.toLowerCase();
   return podcasts.filter((podcast) => {
-    const name = podcast["im:name"].label.toLowerCase();
-    const artist = podcast["im:artist"].label.toLowerCase();
+    const name = podcast['im:name'].label.toLowerCase();
+    const artist = podcast['im:artist'].label.toLowerCase();
     return name.includes(normalizedFilter) || artist.includes(normalizedFilter);
   });
 };
 
 const podcastSlice = createSlice({
-  name: "podcast",
+  name: 'podcast',
   initialState: {
     podcasts: [],
-    status: "idle",
+    status: 'idle',
     error: null,
     lastFetch: null,
-    filter: "",
+    filter: '',
     filteredPodcasts: [],
     isFetchingDetails: false,
     podcastDetails: null,
@@ -87,16 +87,16 @@ const podcastSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchPodcasts.pending, (state) => {
-        state.status = "loading";
+        state.status = 'loading';
       })
       .addCase(fetchPodcasts.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status = 'succeeded';
         state.podcasts = action.payload;
         state.lastFetch = Date.now();
         state.filteredPodcasts = applyFilter(action.payload, state.filter);
       })
       .addCase(fetchPodcasts.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         state.error = action.error.message;
       })
       .addCase(fetchPodcastDetails.pending, (state) => {

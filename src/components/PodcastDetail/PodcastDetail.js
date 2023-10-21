@@ -28,6 +28,7 @@ const PodcastDetail = () => {
   );
 
   const dispatch = useDispatch();
+  
   useEffect(() => {
     dispatch(fetchPodcastDetails(podcastId));
   }, [dispatch, podcastId]);
