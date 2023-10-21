@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const CHeader = styled.div`
   text-decoration: none;
@@ -14,7 +14,7 @@ export const CNavArea = styled.div`
     text-decoration: none;
     color: var(--primary-color);
     font-size: 1.8rem;
-    font-weight: bold;
+    font-weight: bolder;
   }
 `;
 export const SearchArea = styled.div`
@@ -38,4 +38,13 @@ export const SearchArea = styled.div`
     color: #191919;
     outline: none;
   }
+`;
+export const ClearButton = styled.button`
+  border: 0;
+  background-color: var(--primary-color);
+  color: white;
+  margin-left: 0.3rem;
+  border-radius: var(--radius-size);
+  font-size: 0.6rem;
+  height: 70%;
 `;

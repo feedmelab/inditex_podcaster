@@ -1,20 +1,44 @@
-import styled from "styled-components";
-
+import styled, { keyframes } from 'styled-components';
+const fadeIn = keyframes`
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+`;
 export const WrapperDetails = styled.div`
   display: flex;
   flex-wrap: row wrap;
   justify-content: space-evenly;
   width: 100%;
   padding-bottom: 2rem;
+  /* Small devices (portait phones, 576px and up) */
+  @media screen and (max-width: 768px) and (orientation: portrait) {
+    flex-direction: column;
+    align-items: left;
+    justify-content: space-between;
+  }
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    align-items: left;
+    justify-content: space-between;
+  }
+`;
+export const DescriptionParagraf = styled.p`
+  display: flex;
+  width: 100%;
+  padding-right: 1rem;
+  height: auto;
+  flex-direction: column;
+  white-space: pre-line !important;
+  a {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 `;
 export const BarraLateral = styled.div`
   margin-top: 2rem;
   width: 12rem;
+
   display: flex;
   justify-content: flex-start;
-  padding: 1rem !important;
   padding-top: 2rem !important;
-  margin-right: 1rem;
   align-items: center;
   img {
     width: 50%;
@@ -42,16 +66,51 @@ export const BarraLateral = styled.div`
     font-style: italic;
   }
 
-  div p {
-    display: flex;
-    width: 10rem;
-    height: auto;
-    flex-direction: column;
-    white-space: pre-line !important;
-  }
   hr {
     width: 10rem;
     color: var(--bar-color);
+  }
+  @media screen and (max-width: 768px) and (orientation: portrait) {
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    div {
+      display: flex;
+      padding: 0 !important;
+      margin: 0 !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
+      min-width: 13rem !important;
+      max-width: 60%;
+    }
+    img {
+      width: 7rem;
+
+      margin-left: 1rem !important;
+    }
+    a {
+      text-align: left !important;
+    }
+    h2,
+    h4 {
+      align-self: flex-start;
+      justify-self: flex-start;
+      width: max-content;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    hr {
+      width: 10rem;
+      height: 1px;
+      margin-top: 0%;
+      margin-left: 1rem;
+      margin-bottom: 0.3rem;
+      color: var(--bar-color);
+    }
   }
 `;
 export const WrapperColumn = styled.div`
@@ -59,9 +118,17 @@ export const WrapperColumn = styled.div`
   margin-top: 2rem;
   flex-direction: column;
   width: 60%;
+  animation: ${fadeIn} 200ms ease-in-out forwards;
+
+  @media screen and (max-width: 768px) and (orientation: portrait) {
+    width: 100%;
+  }
 `;
 export const BarraEpisodios = styled.div`
+  display: flex;
+  border: 1px solid silver;
   height: 3rem !important;
+  width: 100% !important;
   padding-left: calc(var(--min-spacer) * 4) !important;
   span {
     font-size: 1.4rem;

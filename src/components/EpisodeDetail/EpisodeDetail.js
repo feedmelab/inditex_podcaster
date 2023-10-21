@@ -1,13 +1,14 @@
-import React from "react";
-import { useLocation, useNavigate, Link } from "react-router-dom";
-import { formatDescription } from "../../utils/utils";
-import { useSelector } from "react-redux";
+import React from 'react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { formatDescription } from '../../utils/utils.js';
+
 import {
   BarraLateral,
+  DescriptionParagraf,
   ListEpisodio,
   WrapperColumn,
   WrapperDetails,
-} from "./Episodedetail.styles";
+} from './Episodedetail.styles.js';
 
 const EpisodeDetail = () => {
   const location = useLocation();
@@ -15,60 +16,88 @@ const EpisodeDetail = () => {
     summary: null,
     podcastDetails: null,
   };
-  const { isFetchingDetails } = useSelector((state) => state.podcast);
   const navigate = useNavigate();
-  if (!podcastDetails || isFetchingDetails) {
+  if (!podcastDetails) {
     return <div>Loading...</div>;
   }
+
   return (
     <WrapperDetails className='container'>
-      <BarraLateral className='card'>
-        <Link
-          data-testid='link-back'
-          to={".."}
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(-1);
-          }}
-        >
-          <img
-            className='grow-effect'
-            src={podcastDetails[0]?.artworkUrl600}
-            alt={podcastDetails[0]?.collectionName}
-          />
-        </Link>
-        <hr />
-        <h2>{podcastDetails[0] && podcastDetails[0]?.collectionName}</h2>
-        <h3>by {podcastDetails[0] && artistName}</h3>
-        <hr />
-        <h4>Description:</h4>
-        <div>
-          <p>{summary}</p>
-        </div>
-      </BarraLateral>
-      <WrapperColumn>
-        <ListEpisodio className='card'>
-          <h2 data-testid='titulo-podcast'>
-            {podcastDetails[0] && podcastDetails[0]?.trackName}
-          </h2>
-          <p
-            dangerouslySetInnerHTML={{
-              __html:
-                podcastDetails[0] &&
-                formatDescription(podcastDetails[0]?.description),
+      <aside>
+        <BarraLateral className='card'>
+          <Link
+            to={'..'}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(-1);
             }}
-          ></p>
-
-          <div className='audio-player'>
-            <audio controls autoPlay>
-              <source
-                src={podcastDetails[0] && podcastDetails[0]?.episodeUrl}
-                type='audio/mpeg'
-              />
-              Your browser does not support the audio element.
-            </audio>
+          >
+            <img
+              className='grow-effect'
+              src={podcastDetails[0]?.artworkUrl600}
+              alt={podcastDetails[0].collectionName}
+              onError={(e) => {
+                e.target.src = '/img/404.jpeg';
+              }}
+            />
+          </Link>
+          <div>
+            <hr />
+            <h2>
+              <Link
+                data-testid='link-back'
+                to={'..'}
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate(-1);
+                }}
+              >
+                {podcastDetails[0]?.collectionName}
+              </Link>
+            </h2>
+            <h3>by {podcastDetails[0] && artistName}</h3>
+            <hr />
+            <h4>Description:</h4>
+            <DescriptionParagraf
+              dangerouslySetInnerHTML={{ __html: formatDescription(summary) }}
+            />
           </div>
-        </ListEpisodio>
+        </BarraLateral>
+      </aside>
+      <WrapperColumn>
+        <main>
+          <ListEpisodio className='card'>
+            <h2 data-testid='titulo-podcast'>
+              {podcastDetails[0] && podcastDetails[0]?.trackName}
+            </h2>
+            <div className='audio-player'>
+              <audio controls aria-label={podcastDetails[0]?.trackName}>
+                <source
+                  src={podcastDetails[0] && podcastDetails[0]?.episodeUrl}
+                  type='audio/mpeg'
+                />
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+            <p
+              dangerouslySetInnerHTML={{
+                __html:
+                  podcastDetails[0] &&
+                  formatDescription(podcastDetails[0]?.description),
+              }}
+            />
+
+            {/* <div className='audio-player'>
+              <audio controls aria-label={podcastDetails[0]?.trackName}>
+                <source
+                  src={podcastDetails[0] && podcastDetails[0]?.episodeUrl}
+                  type='audio/mpeg'
+                />
+                Your browser does not support the audio element.
+              </audio>
+            </div> */}
+          </ListEpisodio>
+        </main>
       </WrapperColumn>
     </WrapperDetails>
   );

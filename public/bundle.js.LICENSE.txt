@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+/* NProgress, (c) 2013, 2014 Rico Sta. Cruz - http://ricostacruz.com/nprogress
+ * @license MIT */
+
+>>>>>>> e167561aa1606e8f8543e62ac66e77f84161dd53
 /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
 
 /**
